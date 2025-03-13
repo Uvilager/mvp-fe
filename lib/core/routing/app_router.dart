@@ -7,12 +7,9 @@ import 'package:mvp_fe/features/home/presentation/home_screen.dart';
 final GoRouter router = GoRouter(
   routes: [
     GoRoute(path: '/', builder: (context, state) => const HomeScreen()),
+    GoRoute(path: '/login', builder: (context, state) => const LoginScreen()),
     GoRoute(
-      path: '/auth/login',
-      builder: (context, state) => const LoginScreen(),
-    ),
-    GoRoute(
-      path: '/auth/register',
+      path: '/register',
       builder: (context, state) => const RegisterScreen(),
     ),
   ],
