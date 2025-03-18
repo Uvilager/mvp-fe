@@ -1,8 +1,8 @@
-import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:mvp_fe/features/auth/domain/models/auth_state.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '../../features/auth/presentation/providers/auth_state.dart';
+import '../../features/auth/presentation/providers/auth_provider.dart';
 import '../../features/auth/presentation/screens/login_screen.dart';
 import '../../features/auth/presentation/screens/register_screen.dart';
 import '../../features/home/presentation/screens/home_screen.dart';
@@ -22,12 +22,18 @@ GoRouter router(RouterRef ref) {
       // Get the current path
       final path = state.uri.path;
       
-      // Check if the user is authenticated
-      final isAuthenticated = authState.hasValue && 
-        authState.requireValue is AuthState.authenticated;
-      
       // Auth routes that should only be accessible when NOT authenticated
       final isAuthRoute = path == '/login' || path == '/register';
+    
+      // Check if the user is authenticated 
+      final isAuthenticated = authState.whenOrNull(
+        data: (state) {
+          return switch (state) {
+            Authenticated(:final user) => true,
+            _ => false
+          };
+        },
+      ) ?? false;
       
       if (isAuthenticated) {
         // If user is authenticated and tries to access auth routes,
