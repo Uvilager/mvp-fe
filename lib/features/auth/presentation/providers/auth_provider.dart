@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:mvp_fe/features/auth/data/repositories/auth_repository_impl.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -22,6 +24,7 @@ class Auth extends _$Auth {
   }
 
   Future<void> login(String email, String password) async {
+    log('login auth_provider');
     state = const AsyncValue.loading();
     
     state = await AsyncValue.guard(() async {

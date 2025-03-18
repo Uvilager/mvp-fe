@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dio/dio.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -22,18 +24,49 @@ class AuthRepositoryImpl implements AuthRepository {
 
   @override
   Future<User> login(LoginRequest request) async {
+    log('Starting login process...');
+    log('Request data: ${request.toJson()}');
+    log('Dio base URL: ${_dio.options.baseUrl}');
+    
     try {
+      log('Making POST request to /login...');
       final response = await _dio.post(
         '/login',
         data: request.toJson(),
+        options: Options(
+          headers: {'Accept': 'application/json'},
+          validateStatus: (status) => true, // Accept all status codes for debugging
+        ),
       );
+      
+      log('Response received:');
+      log('Status code: ${response.statusCode}');
+      log('Response data: ${response.data}');
+      log('Response headers: ${response.headers}');
 
-      final token = response.data['token'] as String;
+      if (response.statusCode != 200) {
+        throw ServerException('Server returned ${response.statusCode}: ${response.data}');
+      }
+
+      // Extract token from the data object
+      final token = response.data['data']['token'] as String;
       await _storage.setToken(token);
+      log('Token stored successfully');
 
-      return User.fromJson(response.data['user']);
+      // Since we don't get user data in the login response,
+      // we need to fetch it separately
+      final userResponse = await _dio.get('/me');
+      return User.fromJson(userResponse.data['data']);
     } on DioException catch (e) {
+      log('DioException caught:');
+      log('Type: ${e.type}');
+      log('Message: ${e.message}');
+      log('Response: ${e.response?.data}');
+      log('Error: ${e.error}');
       throw _handleDioException(e);
+    } catch (e) {
+      log('Unexpected error: $e');
+      throw ServerException('Unexpected error: $e');
     }
   }
 
@@ -70,7 +103,8 @@ class AuthRepositoryImpl implements AuthRepository {
       if (token == null) return null;
 
       final response = await _dio.get('/me');
-      return User.fromJson(response.data['user']);
+      log('Data: ${response.data}');
+      return User.fromJson(response.data['data']);
     } on DioException catch (e) {
       if (e.response?.statusCode == 401) {
         await _storage.deleteToken();

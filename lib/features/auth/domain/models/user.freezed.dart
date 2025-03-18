@@ -16,7 +16,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$User {
 
- String get firstName; String get lastName; String get username; String get email; String? get phone; String? get city; String? get address;@JsonKey(name: 'postal_code') String? get postalCode;@JsonKey(name: 'avatar_url') String? get avatarUrl;@JsonKey(name: 'email_verified_at') DateTime? get emailVerifiedAt;
+ int get id;@JsonKey(name: 'first_name') String get firstName;@JsonKey(name: 'last_name') String get lastName; String get username; String get email; String? get phone; String? get city; String? get address;@JsonKey(name: 'postal_code') String? get postalCode;@JsonKey(name: 'avatar_url') String? get avatarUrl;@JsonKey(name: 'created_at') DateTime? get createdAt;@JsonKey(name: 'updated_at') DateTime? get updatedAt;
 /// Create a copy of User
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -29,16 +29,16 @@ $UserCopyWith<User> get copyWith => _$UserCopyWithImpl<User>(this as User, _$ide
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is User&&(identical(other.firstName, firstName) || other.firstName == firstName)&&(identical(other.lastName, lastName) || other.lastName == lastName)&&(identical(other.username, username) || other.username == username)&&(identical(other.email, email) || other.email == email)&&(identical(other.phone, phone) || other.phone == phone)&&(identical(other.city, city) || other.city == city)&&(identical(other.address, address) || other.address == address)&&(identical(other.postalCode, postalCode) || other.postalCode == postalCode)&&(identical(other.avatarUrl, avatarUrl) || other.avatarUrl == avatarUrl)&&(identical(other.emailVerifiedAt, emailVerifiedAt) || other.emailVerifiedAt == emailVerifiedAt));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is User&&(identical(other.id, id) || other.id == id)&&(identical(other.firstName, firstName) || other.firstName == firstName)&&(identical(other.lastName, lastName) || other.lastName == lastName)&&(identical(other.username, username) || other.username == username)&&(identical(other.email, email) || other.email == email)&&(identical(other.phone, phone) || other.phone == phone)&&(identical(other.city, city) || other.city == city)&&(identical(other.address, address) || other.address == address)&&(identical(other.postalCode, postalCode) || other.postalCode == postalCode)&&(identical(other.avatarUrl, avatarUrl) || other.avatarUrl == avatarUrl)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,firstName,lastName,username,email,phone,city,address,postalCode,avatarUrl,emailVerifiedAt);
+int get hashCode => Object.hash(runtimeType,id,firstName,lastName,username,email,phone,city,address,postalCode,avatarUrl,createdAt,updatedAt);
 
 @override
 String toString() {
-  return 'User(firstName: $firstName, lastName: $lastName, username: $username, email: $email, phone: $phone, city: $city, address: $address, postalCode: $postalCode, avatarUrl: $avatarUrl, emailVerifiedAt: $emailVerifiedAt)';
+  return 'User(id: $id, firstName: $firstName, lastName: $lastName, username: $username, email: $email, phone: $phone, city: $city, address: $address, postalCode: $postalCode, avatarUrl: $avatarUrl, createdAt: $createdAt, updatedAt: $updatedAt)';
 }
 
 
@@ -49,7 +49,7 @@ abstract mixin class $UserCopyWith<$Res>  {
   factory $UserCopyWith(User value, $Res Function(User) _then) = _$UserCopyWithImpl;
 @useResult
 $Res call({
- String firstName, String lastName, String username, String email, String? phone, String? city, String? address,@JsonKey(name: 'postal_code') String? postalCode,@JsonKey(name: 'avatar_url') String? avatarUrl,@JsonKey(name: 'email_verified_at') DateTime? emailVerifiedAt
+ int id,@JsonKey(name: 'first_name') String firstName,@JsonKey(name: 'last_name') String lastName, String username, String email, String? phone, String? city, String? address,@JsonKey(name: 'postal_code') String? postalCode,@JsonKey(name: 'avatar_url') String? avatarUrl,@JsonKey(name: 'created_at') DateTime? createdAt,@JsonKey(name: 'updated_at') DateTime? updatedAt
 });
 
 
@@ -66,9 +66,10 @@ class _$UserCopyWithImpl<$Res>
 
 /// Create a copy of User
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? firstName = null,Object? lastName = null,Object? username = null,Object? email = null,Object? phone = freezed,Object? city = freezed,Object? address = freezed,Object? postalCode = freezed,Object? avatarUrl = freezed,Object? emailVerifiedAt = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? firstName = null,Object? lastName = null,Object? username = null,Object? email = null,Object? phone = freezed,Object? city = freezed,Object? address = freezed,Object? postalCode = freezed,Object? avatarUrl = freezed,Object? createdAt = freezed,Object? updatedAt = freezed,}) {
   return _then(_self.copyWith(
-firstName: null == firstName ? _self.firstName : firstName // ignore: cast_nullable_to_non_nullable
+id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
+as int,firstName: null == firstName ? _self.firstName : firstName // ignore: cast_nullable_to_non_nullable
 as String,lastName: null == lastName ? _self.lastName : lastName // ignore: cast_nullable_to_non_nullable
 as String,username: null == username ? _self.username : username // ignore: cast_nullable_to_non_nullable
 as String,email: null == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
@@ -77,7 +78,8 @@ as String?,city: freezed == city ? _self.city : city // ignore: cast_nullable_to
 as String?,address: freezed == address ? _self.address : address // ignore: cast_nullable_to_non_nullable
 as String?,postalCode: freezed == postalCode ? _self.postalCode : postalCode // ignore: cast_nullable_to_non_nullable
 as String?,avatarUrl: freezed == avatarUrl ? _self.avatarUrl : avatarUrl // ignore: cast_nullable_to_non_nullable
-as String?,emailVerifiedAt: freezed == emailVerifiedAt ? _self.emailVerifiedAt : emailVerifiedAt // ignore: cast_nullable_to_non_nullable
+as String?,createdAt: freezed == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
+as DateTime?,updatedAt: freezed == updatedAt ? _self.updatedAt : updatedAt // ignore: cast_nullable_to_non_nullable
 as DateTime?,
   ));
 }
@@ -89,11 +91,12 @@ as DateTime?,
 @JsonSerializable()
 
 class _User implements User {
-  const _User({required this.firstName, required this.lastName, required this.username, required this.email, this.phone, this.city, this.address, @JsonKey(name: 'postal_code') this.postalCode, @JsonKey(name: 'avatar_url') this.avatarUrl, @JsonKey(name: 'email_verified_at') this.emailVerifiedAt});
+  const _User({required this.id, @JsonKey(name: 'first_name') required this.firstName, @JsonKey(name: 'last_name') required this.lastName, required this.username, required this.email, this.phone, this.city, this.address, @JsonKey(name: 'postal_code') this.postalCode, @JsonKey(name: 'avatar_url') this.avatarUrl, @JsonKey(name: 'created_at') this.createdAt, @JsonKey(name: 'updated_at') this.updatedAt});
   factory _User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
 
-@override final  String firstName;
-@override final  String lastName;
+@override final  int id;
+@override@JsonKey(name: 'first_name') final  String firstName;
+@override@JsonKey(name: 'last_name') final  String lastName;
 @override final  String username;
 @override final  String email;
 @override final  String? phone;
@@ -101,7 +104,8 @@ class _User implements User {
 @override final  String? address;
 @override@JsonKey(name: 'postal_code') final  String? postalCode;
 @override@JsonKey(name: 'avatar_url') final  String? avatarUrl;
-@override@JsonKey(name: 'email_verified_at') final  DateTime? emailVerifiedAt;
+@override@JsonKey(name: 'created_at') final  DateTime? createdAt;
+@override@JsonKey(name: 'updated_at') final  DateTime? updatedAt;
 
 /// Create a copy of User
 /// with the given fields replaced by the non-null parameter values.
@@ -116,16 +120,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _User&&(identical(other.firstName, firstName) || other.firstName == firstName)&&(identical(other.lastName, lastName) || other.lastName == lastName)&&(identical(other.username, username) || other.username == username)&&(identical(other.email, email) || other.email == email)&&(identical(other.phone, phone) || other.phone == phone)&&(identical(other.city, city) || other.city == city)&&(identical(other.address, address) || other.address == address)&&(identical(other.postalCode, postalCode) || other.postalCode == postalCode)&&(identical(other.avatarUrl, avatarUrl) || other.avatarUrl == avatarUrl)&&(identical(other.emailVerifiedAt, emailVerifiedAt) || other.emailVerifiedAt == emailVerifiedAt));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _User&&(identical(other.id, id) || other.id == id)&&(identical(other.firstName, firstName) || other.firstName == firstName)&&(identical(other.lastName, lastName) || other.lastName == lastName)&&(identical(other.username, username) || other.username == username)&&(identical(other.email, email) || other.email == email)&&(identical(other.phone, phone) || other.phone == phone)&&(identical(other.city, city) || other.city == city)&&(identical(other.address, address) || other.address == address)&&(identical(other.postalCode, postalCode) || other.postalCode == postalCode)&&(identical(other.avatarUrl, avatarUrl) || other.avatarUrl == avatarUrl)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,firstName,lastName,username,email,phone,city,address,postalCode,avatarUrl,emailVerifiedAt);
+int get hashCode => Object.hash(runtimeType,id,firstName,lastName,username,email,phone,city,address,postalCode,avatarUrl,createdAt,updatedAt);
 
 @override
 String toString() {
-  return 'User(firstName: $firstName, lastName: $lastName, username: $username, email: $email, phone: $phone, city: $city, address: $address, postalCode: $postalCode, avatarUrl: $avatarUrl, emailVerifiedAt: $emailVerifiedAt)';
+  return 'User(id: $id, firstName: $firstName, lastName: $lastName, username: $username, email: $email, phone: $phone, city: $city, address: $address, postalCode: $postalCode, avatarUrl: $avatarUrl, createdAt: $createdAt, updatedAt: $updatedAt)';
 }
 
 
@@ -136,7 +140,7 @@ abstract mixin class _$UserCopyWith<$Res> implements $UserCopyWith<$Res> {
   factory _$UserCopyWith(_User value, $Res Function(_User) _then) = __$UserCopyWithImpl;
 @override @useResult
 $Res call({
- String firstName, String lastName, String username, String email, String? phone, String? city, String? address,@JsonKey(name: 'postal_code') String? postalCode,@JsonKey(name: 'avatar_url') String? avatarUrl,@JsonKey(name: 'email_verified_at') DateTime? emailVerifiedAt
+ int id,@JsonKey(name: 'first_name') String firstName,@JsonKey(name: 'last_name') String lastName, String username, String email, String? phone, String? city, String? address,@JsonKey(name: 'postal_code') String? postalCode,@JsonKey(name: 'avatar_url') String? avatarUrl,@JsonKey(name: 'created_at') DateTime? createdAt,@JsonKey(name: 'updated_at') DateTime? updatedAt
 });
 
 
@@ -153,9 +157,10 @@ class __$UserCopyWithImpl<$Res>
 
 /// Create a copy of User
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? firstName = null,Object? lastName = null,Object? username = null,Object? email = null,Object? phone = freezed,Object? city = freezed,Object? address = freezed,Object? postalCode = freezed,Object? avatarUrl = freezed,Object? emailVerifiedAt = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? firstName = null,Object? lastName = null,Object? username = null,Object? email = null,Object? phone = freezed,Object? city = freezed,Object? address = freezed,Object? postalCode = freezed,Object? avatarUrl = freezed,Object? createdAt = freezed,Object? updatedAt = freezed,}) {
   return _then(_User(
-firstName: null == firstName ? _self.firstName : firstName // ignore: cast_nullable_to_non_nullable
+id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
+as int,firstName: null == firstName ? _self.firstName : firstName // ignore: cast_nullable_to_non_nullable
 as String,lastName: null == lastName ? _self.lastName : lastName // ignore: cast_nullable_to_non_nullable
 as String,username: null == username ? _self.username : username // ignore: cast_nullable_to_non_nullable
 as String,email: null == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
@@ -164,7 +169,8 @@ as String?,city: freezed == city ? _self.city : city // ignore: cast_nullable_to
 as String?,address: freezed == address ? _self.address : address // ignore: cast_nullable_to_non_nullable
 as String?,postalCode: freezed == postalCode ? _self.postalCode : postalCode // ignore: cast_nullable_to_non_nullable
 as String?,avatarUrl: freezed == avatarUrl ? _self.avatarUrl : avatarUrl // ignore: cast_nullable_to_non_nullable
-as String?,emailVerifiedAt: freezed == emailVerifiedAt ? _self.emailVerifiedAt : emailVerifiedAt // ignore: cast_nullable_to_non_nullable
+as String?,createdAt: freezed == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
+as DateTime?,updatedAt: freezed == updatedAt ? _self.updatedAt : updatedAt // ignore: cast_nullable_to_non_nullable
 as DateTime?,
   ));
 }
