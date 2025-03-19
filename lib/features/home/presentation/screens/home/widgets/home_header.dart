@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:mvp_fe/core/widgets/network_image_with_placeholder.dart';
 
 import '../../../../../auth/domain/models/auth_state.dart';
 import '../../../../../auth/presentation/providers/auth_provider.dart';
+
 
 class HomeHeader extends ConsumerWidget {
   const HomeHeader({super.key});
@@ -23,17 +25,12 @@ class HomeHeader extends ConsumerWidget {
           children: [
             Row(
               children: [
-                CircleAvatar(
-                  radius: 30,
-                  backgroundImage: user?.avatarUrl != null
-                      ? NetworkImage(user!.avatarUrl!)
-                      : null,
-                  child: user?.avatarUrl == null
-                      ? Text(
-                          user?.firstName.substring(0, 1).toUpperCase() ?? 'U',
-                          style: const TextStyle(fontSize: 24),
-                        )
-                      : null,
+                ClipOval(
+                  child: NetworkImageWithPlaceholder(
+                    imageUrl: user?.avatarUrl,
+                    width: 60,
+                    height: 60,
+                  ),
                 ),
                 const SizedBox(width: 16),
                 Expanded(
