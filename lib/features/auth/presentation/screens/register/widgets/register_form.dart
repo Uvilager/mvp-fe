@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:mvp_fe/core/widgets/buttons/primary_button.dart';
+import 'package:mvp_fe/core/widgets/forms/custom_text_field.dart';
+import 'package:mvp_fe/core/widgets/forms/password_field.dart';
+import 'package:mvp_fe/features/auth/presentation/providers/auth_provider.dart';
 
-import '../../../providers/auth_provider.dart';
-import '../../../widgets/auth_text_field.dart';
 
 class RegisterForm extends ConsumerStatefulWidget {
   const RegisterForm({super.key});
@@ -16,49 +18,69 @@ class _RegisterFormState extends ConsumerState<RegisterForm> {
   final _firstNameController = TextEditingController();
   final _lastNameController = TextEditingController();
   final _usernameController = TextEditingController();
+  final _phoneController = TextEditingController();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
-  bool _isPasswordVisible = false;
-  bool _isConfirmPasswordVisible = false;
+  final _cityController = TextEditingController();
+  final _addressController = TextEditingController();
+  final _postalCodeController = TextEditingController();
+  final _avatarUrlController = TextEditingController();
+  bool _isLoading = false;
 
   @override
   void dispose() {
     _firstNameController.dispose();
     _lastNameController.dispose();
     _usernameController.dispose();
+    _phoneController.dispose();
     _emailController.dispose();
     _passwordController.dispose();
     _confirmPasswordController.dispose();
+    _cityController.dispose();
+    _addressController.dispose();
+    _postalCodeController.dispose();
+    _avatarUrlController.dispose();
     super.dispose();
   }
 
   Future<void> _onSubmit() async {
     if (!_formKey.currentState!.validate()) return;
 
-    await ref.read(authProvider.notifier).register(
-      firstName: _firstNameController.text,
-      lastName: _lastNameController.text,
-      username: _usernameController.text,
-      email: _emailController.text,
-      password: _passwordController.text,
-      passwordConfirmation: _confirmPasswordController.text,
-    );
+    setState(() => _isLoading = true);
+
+    try {
+      await ref.read(authProvider.notifier).register(
+        firstName: _firstNameController.text.trim(),
+        lastName: _lastNameController.text.trim(),
+        username: _usernameController.text.trim(),
+        phone: _phoneController.text.trim(),
+        email: _emailController.text.trim(),
+        password: _passwordController.text,
+        passwordConfirmation: _confirmPasswordController.text,
+        city: _cityController.text.trim(),
+        address: _addressController.text.trim(),
+        postalCode: _postalCodeController.text.trim(),
+        avatarUrl: _avatarUrlController.text.trim(),
+      );
+    } finally {
+      if (mounted) {
+        setState(() => _isLoading = false);
+      }
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    final authState = ref.watch(authProvider);
-    final isLoading = authState.isLoading;
-
     return Form(
       key: _formKey,
       child: Column(
         children: [
+          // Name Fields
           Row(
             children: [
               Expanded(
-                child: AuthTextField(
+                child: CustomTextField(
                   controller: _firstNameController,
                   label: 'First Name',
                   validator: (value) {
@@ -71,7 +93,7 @@ class _RegisterFormState extends ConsumerState<RegisterForm> {
               ),
               const SizedBox(width: 16),
               Expanded(
-                child: AuthTextField(
+                child: CustomTextField(
                   controller: _lastNameController,
                   label: 'Last Name',
                   validator: (value) {
@@ -85,7 +107,9 @@ class _RegisterFormState extends ConsumerState<RegisterForm> {
             ],
           ),
           const SizedBox(height: 16),
-          AuthTextField(
+
+          // Username Field
+          CustomTextField(
             controller: _usernameController,
             label: 'Username',
             validator: (value) {
@@ -99,7 +123,26 @@ class _RegisterFormState extends ConsumerState<RegisterForm> {
             },
           ),
           const SizedBox(height: 16),
-          AuthTextField(
+
+          // Phone Field
+          CustomTextField(
+            controller: _phoneController,
+            label: 'Phone',
+            keyboardType: TextInputType.phone,
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'Please enter your phone number';
+              }
+              if (!value.startsWith('+')) {
+                return 'Phone number should start with +';
+              }
+              return null;
+            },
+          ),
+          const SizedBox(height: 16),
+
+          // Email Field
+          CustomTextField(
             controller: _emailController,
             label: 'Email',
             keyboardType: TextInputType.emailAddress,
@@ -114,20 +157,11 @@ class _RegisterFormState extends ConsumerState<RegisterForm> {
             },
           ),
           const SizedBox(height: 16),
-          AuthTextField(
+
+          // Password Field
+          PasswordField(
             controller: _passwordController,
             label: 'Password',
-            obscureText: !_isPasswordVisible,
-            suffixIcon: IconButton(
-              icon: Icon(
-                _isPasswordVisible ? Icons.visibility_off : Icons.visibility,
-              ),
-              onPressed: () {
-                setState(() {
-                  _isPasswordVisible = !_isPasswordVisible;
-                });
-              },
-            ),
             validator: (value) {
               if (value == null || value.isEmpty) {
                 return 'Please enter a password';
@@ -139,20 +173,11 @@ class _RegisterFormState extends ConsumerState<RegisterForm> {
             },
           ),
           const SizedBox(height: 16),
-          AuthTextField(
+
+          // Confirm Password Field
+          PasswordField(
             controller: _confirmPasswordController,
             label: 'Confirm Password',
-            obscureText: !_isConfirmPasswordVisible,
-            suffixIcon: IconButton(
-              icon: Icon(
-                _isConfirmPasswordVisible ? Icons.visibility_off : Icons.visibility,
-              ),
-              onPressed: () {
-                setState(() {
-                  _isConfirmPasswordVisible = !_isConfirmPasswordVisible;
-                });
-              },
-            ),
             validator: (value) {
               if (value == null || value.isEmpty) {
                 return 'Please confirm your password';
@@ -163,15 +188,60 @@ class _RegisterFormState extends ConsumerState<RegisterForm> {
               return null;
             },
           ),
+          const SizedBox(height: 16),
+
+          // City Field
+          CustomTextField(
+            controller: _cityController,
+            label: 'City',
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'Please enter your city';
+              }
+              return null;
+            },
+          ),
+          const SizedBox(height: 16),
+
+          // Address Field
+          CustomTextField(
+            controller: _addressController,
+            label: 'Address',
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'Please enter your address';
+              }
+              return null;
+            },
+          ),
+          const SizedBox(height: 16),
+
+          // Postal Code Field
+          CustomTextField(
+            controller: _postalCodeController,
+            label: 'Postal Code',
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'Please enter your postal code';
+              }
+              return null;
+            },
+          ),
+          const SizedBox(height: 16),
+
+          // Avatar URL Field
+          CustomTextField(
+            controller: _avatarUrlController,
+            label: 'Avatar URL (Optional)',
+            keyboardType: TextInputType.url,
+          ),
           const SizedBox(height: 24),
-          SizedBox(
-            height: 50,
-            child: ElevatedButton(
-              onPressed: isLoading ? null : _onSubmit,
-              child: isLoading
-                  ? const CircularProgressIndicator()
-                  : const Text('Create Account'),
-            ),
+
+          // Register Button
+          PrimaryButton(
+            onPressed: _isLoading ? null : _onSubmit,
+            isLoading: _isLoading,
+            text: 'Create Account',
           ),
         ],
       ),

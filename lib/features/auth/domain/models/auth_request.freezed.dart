@@ -152,7 +152,7 @@ as String,
 /// @nodoc
 mixin _$RegisterRequest {
 
- String get firstName; String get lastName; String get username; String get email; String get password; String get passwordConfirmation; String? get phone; String? get city; String? get address; String? get postalCode; String? get avatarUrl;
+@JsonKey(name: 'first_name') String get firstName;@JsonKey(name: 'last_name') String get lastName; String get username; String get email; String get password;@JsonKey(name: 'password_confirmation') String get passwordConfirmation; String? get phone; String? get city; String? get address;@JsonKey(name: 'postal_code') String? get postalCode;@JsonKey(name: 'avatar_url') String? get avatarUrl;
 /// Create a copy of RegisterRequest
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -185,7 +185,7 @@ abstract mixin class $RegisterRequestCopyWith<$Res>  {
   factory $RegisterRequestCopyWith(RegisterRequest value, $Res Function(RegisterRequest) _then) = _$RegisterRequestCopyWithImpl;
 @useResult
 $Res call({
- String firstName, String lastName, String username, String email, String password, String passwordConfirmation, String? phone, String? city, String? address, String? postalCode, String? avatarUrl
+@JsonKey(name: 'first_name') String firstName,@JsonKey(name: 'last_name') String lastName, String username, String email, String password,@JsonKey(name: 'password_confirmation') String passwordConfirmation, String? phone, String? city, String? address,@JsonKey(name: 'postal_code') String? postalCode,@JsonKey(name: 'avatar_url') String? avatarUrl
 });
 
 
@@ -226,20 +226,20 @@ as String?,
 @JsonSerializable()
 
 class _RegisterRequest implements RegisterRequest {
-  const _RegisterRequest({required this.firstName, required this.lastName, required this.username, required this.email, required this.password, required this.passwordConfirmation, this.phone, this.city, this.address, this.postalCode, this.avatarUrl});
+  const _RegisterRequest({@JsonKey(name: 'first_name') required this.firstName, @JsonKey(name: 'last_name') required this.lastName, required this.username, required this.email, required this.password, @JsonKey(name: 'password_confirmation') required this.passwordConfirmation, this.phone, this.city, this.address, @JsonKey(name: 'postal_code') this.postalCode, @JsonKey(name: 'avatar_url') this.avatarUrl});
   factory _RegisterRequest.fromJson(Map<String, dynamic> json) => _$RegisterRequestFromJson(json);
 
-@override final  String firstName;
-@override final  String lastName;
+@override@JsonKey(name: 'first_name') final  String firstName;
+@override@JsonKey(name: 'last_name') final  String lastName;
 @override final  String username;
 @override final  String email;
 @override final  String password;
-@override final  String passwordConfirmation;
+@override@JsonKey(name: 'password_confirmation') final  String passwordConfirmation;
 @override final  String? phone;
 @override final  String? city;
 @override final  String? address;
-@override final  String? postalCode;
-@override final  String? avatarUrl;
+@override@JsonKey(name: 'postal_code') final  String? postalCode;
+@override@JsonKey(name: 'avatar_url') final  String? avatarUrl;
 
 /// Create a copy of RegisterRequest
 /// with the given fields replaced by the non-null parameter values.
@@ -274,7 +274,7 @@ abstract mixin class _$RegisterRequestCopyWith<$Res> implements $RegisterRequest
   factory _$RegisterRequestCopyWith(_RegisterRequest value, $Res Function(_RegisterRequest) _then) = __$RegisterRequestCopyWithImpl;
 @override @useResult
 $Res call({
- String firstName, String lastName, String username, String email, String password, String passwordConfirmation, String? phone, String? city, String? address, String? postalCode, String? avatarUrl
+@JsonKey(name: 'first_name') String firstName,@JsonKey(name: 'last_name') String lastName, String username, String email, String password,@JsonKey(name: 'password_confirmation') String passwordConfirmation, String? phone, String? city, String? address,@JsonKey(name: 'postal_code') String? postalCode,@JsonKey(name: 'avatar_url') String? avatarUrl
 });
 
 

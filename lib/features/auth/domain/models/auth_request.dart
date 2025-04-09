@@ -16,17 +16,17 @@ abstract class LoginRequest with _$LoginRequest {
 @freezed
 abstract class RegisterRequest with _$RegisterRequest {
   const factory RegisterRequest({
-    required String firstName,
-    required String lastName,
+    @JsonKey(name: 'first_name') required String firstName,
+    @JsonKey(name: 'last_name') required String lastName,
     required String username,
     required String email,
     required String password,
-    required String passwordConfirmation,
+    @JsonKey(name: 'password_confirmation') required String passwordConfirmation,
     String? phone,
     String? city,
     String? address,
-    String? postalCode,
-    String? avatarUrl,
+    @JsonKey(name: 'postal_code') String? postalCode,
+    @JsonKey(name: 'avatar_url') String? avatarUrl,
   }) = _RegisterRequest;
 
   factory RegisterRequest.fromJson(Map<String, dynamic> json) => _$RegisterRequestFromJson(json);

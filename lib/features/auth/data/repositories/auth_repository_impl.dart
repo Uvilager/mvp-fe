@@ -72,18 +72,47 @@ class AuthRepositoryImpl implements AuthRepository {
 
   @override
   Future<User> register(RegisterRequest request) async {
+    log('Starting registration process...');
+    log('Request data: ${request.toJson()}');
+    log('Dio base URL: ${_dio.options.baseUrl}');
+    
     try {
+      log('Making POST request to /register...');
       final response = await _dio.post(
         '/register',
         data: request.toJson(),
+        options: Options(
+          headers: {'Accept': 'application/json'},
+          validateStatus: (status) => true, // Accept all status codes for debugging
+        ),
       );
+      
+      log('Response received:');
+      log('Status code: ${response.statusCode}');
+      log('Response data: ${response.data}');
+      log('Response headers: ${response.headers}');
 
-      final token = response.data['token'] as String;
+      if (response.statusCode != 200) {
+        throw ServerException('Server returned ${response.statusCode}: ${response.data}');
+      }
+
+      // Extract token from the data object
+      final token = response.data['data']['token'] as String;
       await _storage.setToken(token);
+      log('Token stored successfully');
 
-      return User.fromJson(response.data['user']);
+      // Extract user data from the response
+      return User.fromJson(response.data['data']['user']);
     } on DioException catch (e) {
+      log('DioException caught:');
+      log('Type: ${e.type}');
+      log('Message: ${e.message}');
+      log('Response: ${e.response?.data}');
+      log('Error: ${e.error}');
       throw _handleDioException(e);
+    } catch (e) {
+      log('Unexpected error: $e');
+      throw ServerException('Unexpected error: $e');
     }
   }
 
