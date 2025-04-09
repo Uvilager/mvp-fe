@@ -5,9 +5,11 @@ import '../../features/home/presentation/screens/home_screen.dart';
 import '../../features/leaderboard/presentation/screens/leaderboard_screen.dart';
 import '../../features/projects/presentation/screens/projects_screen.dart';
 import '../../features/fundraisers/presentation/screens/fundraisers_screen.dart';
-import '../../features/settings/presentation/screens/settings_screen.dart';
+import '../../features/sponsors/presentation/screens/sponsors_screen.dart';
 
-final selectedIndexProvider = StateProvider<int>((ref) => 2); // Home is in the middle (index 2)
+final selectedIndexProvider = StateProvider<int>(
+  (ref) => 2,
+); // Home is in the middle (index 2)
 
 class MainScreen extends ConsumerWidget {
   const MainScreen({super.key});
@@ -24,7 +26,7 @@ class MainScreen extends ConsumerWidget {
           const ProjectsScreen(),
           const HomeScreen(),
           const FundraisersScreen(),
-          const SettingsScreen(),
+          const SponsorsScreen(),
         ],
       ),
       bottomNavigationBar: NavigationBar(
@@ -54,12 +56,12 @@ class MainScreen extends ConsumerWidget {
             label: 'Fundraisers',
           ),
           NavigationDestination(
-            icon: Icon(Icons.settings_outlined),
-            selectedIcon: Icon(Icons.settings),
-            label: 'Settings',
+            icon: Icon(Icons.handshake_outlined),
+            selectedIcon: Icon(Icons.handshake),
+            label: 'Sponsors',
           ),
         ],
       ),
     );
   }
-} 
+}
