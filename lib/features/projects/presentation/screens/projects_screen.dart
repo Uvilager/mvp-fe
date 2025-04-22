@@ -24,36 +24,41 @@ class ProjectsScreen extends ConsumerWidget {
         ],
       ),
       body: projectsAsync.when(
-        data: (projects) => projects.isEmpty
-            ? const Center(child: Text('No projects found'))
-            : RefreshIndicator(
-                onRefresh: () => ref.read(projectsProvider.notifier).refresh(),
-                child: ListView.builder(
-                  padding: const EdgeInsets.all(16),
-                  itemCount: projects.length,
-                  itemBuilder: (context, index) {
-                    final project = projects[index];
-                    return Padding(
-                      padding: const EdgeInsets.only(bottom: 16),
-                      child: ProjectCard(project: project),
-                    );
-                  },
-                ),
-              ),
+        data:
+            (projects) =>
+                projects.isEmpty
+                    ? const Center(child: Text('No projects found'))
+                    : RefreshIndicator(
+                      onRefresh:
+                          () => ref.read(projectsProvider.notifier).refresh(),
+                      child: ListView.builder(
+                        padding: const EdgeInsets.all(16),
+                        itemCount: projects.length,
+                        itemBuilder: (context, index) {
+                          final project = projects[index];
+                          return Padding(
+                            padding: const EdgeInsets.only(bottom: 16),
+                            child: ProjectCard(project: project),
+                          );
+                        },
+                      ),
+                    ),
         loading: () => const Center(child: CircularProgressIndicator()),
-        error: (error, stack) => Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text('Error: ${error.toString()}'),
-              const SizedBox(height: 16),
-              ElevatedButton(
-                onPressed: () => ref.read(projectsProvider.notifier).refresh(),
-                child: const Text('Retry'),
+        error:
+            (error, stack) => Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text('Error: ${error.toString()}'),
+                  const SizedBox(height: 16),
+                  ElevatedButton(
+                    onPressed:
+                        () => ref.read(projectsProvider.notifier).refresh(),
+                    child: const Text('Retry'),
+                  ),
+                ],
               ),
-            ],
-          ),
-        ),
+            ),
       ),
     );
   }
@@ -62,22 +67,23 @@ class ProjectsScreen extends ConsumerWidget {
 class ProjectCard extends StatelessWidget {
   final Project project;
 
-  const ProjectCard({
-    super.key,
-    required this.project,
-  });
+  const ProjectCard({super.key, required this.project});
 
   @override
   Widget build(BuildContext context) {
     return Card(
       clipBehavior: Clip.antiAlias,
       child: InkWell(
-        onTap: () => Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => ProjectDetailScreen(project: project),
-          ),
-        ),
+        onTap:
+            () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder:
+                    (context) => ProjectDetailScreen(
+                      projectId: project.id,
+                    ), // Pass projectId instead of project
+              ),
+            ),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -108,11 +114,7 @@ class ProjectCard extends StatelessWidget {
                     const SizedBox(height: 16),
                     Row(
                       children: [
-                        Icon(
-                          Icons.people,
-                          size: 16,
-                          color: Colors.grey[600],
-                        ),
+                        Icon(Icons.people, size: 16, color: Colors.grey[600]),
                         const SizedBox(width: 4),
                         Text(
                           '${project.minUsers}-${project.maxUsers}',
@@ -122,11 +124,7 @@ class ProjectCard extends StatelessWidget {
                           ),
                         ),
                         const SizedBox(width: 16),
-                        Icon(
-                          Icons.star,
-                          size: 16,
-                          color: Colors.grey[600],
-                        ),
+                        Icon(Icons.star, size: 16, color: Colors.grey[600]),
                         const SizedBox(width: 4),
                         Text(
                           '${project.pointsEarned}',
@@ -146,4 +144,4 @@ class ProjectCard extends StatelessWidget {
       ),
     );
   }
-} 
+}

@@ -21,7 +21,7 @@ class AuthInterceptor extends Interceptor {
     log('Method: ${options.method}');
     log('Headers: ${options.headers}');
     log('Data: ${options.data}');
-    
+
     final token = await storage.getToken();
     if (token != null) {
       options.headers['Authorization'] = 'Bearer $token';
@@ -31,10 +31,7 @@ class AuthInterceptor extends Interceptor {
   }
 
   @override
-  void onResponse(
-    Response response,
-    ResponseInterceptorHandler handler,
-  ) {
+  void onResponse(Response response, ResponseInterceptorHandler handler) {
     log('Dio Response:');
     log('Status: ${response.statusCode}');
     log('Data: ${response.data}');
@@ -42,10 +39,7 @@ class AuthInterceptor extends Interceptor {
   }
 
   @override
-  void onError(
-    DioException err,
-    ErrorInterceptorHandler handler,
-  ) {
+  void onError(DioException err, ErrorInterceptorHandler handler) {
     log('Dio Error:');
     log('Type: ${err.type}');
     log('Message: ${err.message}');
@@ -57,10 +51,10 @@ class AuthInterceptor extends Interceptor {
 @riverpod
 Dio dio(DioRef ref) {
   final storage = ref.watch(secureStorageProvider);
-  
+
   final dio = Dio(
     BaseOptions(
-      baseUrl: 'http://68.183.218.115/api',
+      baseUrl: 'https://api.mvpsrbije.com/v1',
       headers: {'Accept': 'application/json'},
       connectTimeout: const Duration(seconds: 5),
       receiveTimeout: const Duration(seconds: 3),
@@ -68,18 +62,20 @@ Dio dio(DioRef ref) {
   );
 
   // Add logging interceptor
-  dio.interceptors.add(LogInterceptor(
-    request: true,
-    requestHeader: true,
-    requestBody: true,
-    responseHeader: true,
-    responseBody: true,
-    error: true,
-    logPrint: (object) => log(object.toString()),
-  ));
+  dio.interceptors.add(
+    LogInterceptor(
+      request: true,
+      requestHeader: true,
+      requestBody: true,
+      responseHeader: true,
+      responseBody: true,
+      error: true,
+      logPrint: (object) => log(object.toString()),
+    ),
+  );
 
   // Add auth interceptor
   dio.interceptors.add(AuthInterceptor(storage));
 
   return dio;
-} 
+}

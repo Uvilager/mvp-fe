@@ -6,7 +6,149 @@ part of 'project_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$projectsHash() => r'f18eb2e5c1179d9c5fadcd60d982037e60ae3730';
+String _$projectDetailHash() => r'c29b01eb1c6fd68a66fe963d6eed3549ab36aab9';
+
+/// Copied from Dart SDK
+class _SystemHash {
+  _SystemHash._();
+
+  static int combine(int hash, int value) {
+    // ignore: parameter_assignments
+    hash = 0x1fffffff & (hash + value);
+    // ignore: parameter_assignments
+    hash = 0x1fffffff & (hash + ((0x0007ffff & hash) << 10));
+    return hash ^ (hash >> 6);
+  }
+
+  static int finish(int hash) {
+    // ignore: parameter_assignments
+    hash = 0x1fffffff & (hash + ((0x03ffffff & hash) << 3));
+    // ignore: parameter_assignments
+    hash = hash ^ (hash >> 11);
+    return 0x1fffffff & (hash + ((0x00003fff & hash) << 15));
+  }
+}
+
+/// See also [projectDetail].
+@ProviderFor(projectDetail)
+const projectDetailProvider = ProjectDetailFamily();
+
+/// See also [projectDetail].
+class ProjectDetailFamily extends Family<AsyncValue<Project>> {
+  /// See also [projectDetail].
+  const ProjectDetailFamily();
+
+  /// See also [projectDetail].
+  ProjectDetailProvider call(int projectId) {
+    return ProjectDetailProvider(projectId);
+  }
+
+  @override
+  ProjectDetailProvider getProviderOverride(
+    covariant ProjectDetailProvider provider,
+  ) {
+    return call(provider.projectId);
+  }
+
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'projectDetailProvider';
+}
+
+/// See also [projectDetail].
+class ProjectDetailProvider extends AutoDisposeFutureProvider<Project> {
+  /// See also [projectDetail].
+  ProjectDetailProvider(int projectId)
+    : this._internal(
+        (ref) => projectDetail(ref as ProjectDetailRef, projectId),
+        from: projectDetailProvider,
+        name: r'projectDetailProvider',
+        debugGetCreateSourceHash:
+            const bool.fromEnvironment('dart.vm.product')
+                ? null
+                : _$projectDetailHash,
+        dependencies: ProjectDetailFamily._dependencies,
+        allTransitiveDependencies:
+            ProjectDetailFamily._allTransitiveDependencies,
+        projectId: projectId,
+      );
+
+  ProjectDetailProvider._internal(
+    super._createNotifier, {
+    required super.name,
+    required super.dependencies,
+    required super.allTransitiveDependencies,
+    required super.debugGetCreateSourceHash,
+    required super.from,
+    required this.projectId,
+  }) : super.internal();
+
+  final int projectId;
+
+  @override
+  Override overrideWith(
+    FutureOr<Project> Function(ProjectDetailRef provider) create,
+  ) {
+    return ProviderOverride(
+      origin: this,
+      override: ProjectDetailProvider._internal(
+        (ref) => create(ref as ProjectDetailRef),
+        from: from,
+        name: null,
+        dependencies: null,
+        allTransitiveDependencies: null,
+        debugGetCreateSourceHash: null,
+        projectId: projectId,
+      ),
+    );
+  }
+
+  @override
+  AutoDisposeFutureProviderElement<Project> createElement() {
+    return _ProjectDetailProviderElement(this);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is ProjectDetailProvider && other.projectId == projectId;
+  }
+
+  @override
+  int get hashCode {
+    var hash = _SystemHash.combine(0, runtimeType.hashCode);
+    hash = _SystemHash.combine(hash, projectId.hashCode);
+
+    return _SystemHash.finish(hash);
+  }
+}
+
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
+mixin ProjectDetailRef on AutoDisposeFutureProviderRef<Project> {
+  /// The parameter `projectId` of this provider.
+  int get projectId;
+}
+
+class _ProjectDetailProviderElement
+    extends AutoDisposeFutureProviderElement<Project>
+    with ProjectDetailRef {
+  _ProjectDetailProviderElement(super.provider);
+
+  @override
+  int get projectId => (origin as ProjectDetailProvider).projectId;
+}
+
+String _$projectsHash() => r'711631313b7e24c7b8141909fa70dbeb5690196e';
 
 /// See also [Projects].
 @ProviderFor(Projects)
