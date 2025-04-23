@@ -7,4 +7,5 @@ abstract class AuthRepository {
   Future<void> logout();
   Future<User?> getCurrentUser();
   Future<bool> isAuthenticated();
-} 
+  Future<User> updateUserDetails(Map<String, dynamic> data); // Added method
+}

@@ -15,19 +15,17 @@ part 'auth_repository_impl.g.dart';
 class AuthRepositoryImpl implements AuthRepository {
   final Dio _dio;
   final SecureStorage _storage;
-  
-  AuthRepositoryImpl({
-    required Dio dio,
-    required SecureStorage storage,
-  })  : _dio = dio,
-        _storage = storage;
+
+  AuthRepositoryImpl({required Dio dio, required SecureStorage storage})
+    : _dio = dio,
+      _storage = storage;
 
   @override
   Future<User> login(LoginRequest request) async {
     log('Starting login process...');
     log('Request data: ${request.toJson()}');
     log('Dio base URL: ${_dio.options.baseUrl}');
-    
+
     try {
       log('Making POST request to /login...');
       final response = await _dio.post(
@@ -35,17 +33,20 @@ class AuthRepositoryImpl implements AuthRepository {
         data: request.toJson(),
         options: Options(
           headers: {'Accept': 'application/json'},
-          validateStatus: (status) => true, // Accept all status codes for debugging
+          validateStatus:
+              (status) => true, // Accept all status codes for debugging
         ),
       );
-      
+
       log('Response received:');
       log('Status code: ${response.statusCode}');
       log('Response data: ${response.data}');
       log('Response headers: ${response.headers}');
 
       if (response.statusCode != 200) {
-        throw ServerException('Server returned ${response.statusCode}: ${response.data}');
+        throw ServerException(
+          'Server returned ${response.statusCode}: ${response.data}',
+        );
       }
 
       // Extract token from the data object
@@ -75,7 +76,7 @@ class AuthRepositoryImpl implements AuthRepository {
     log('Starting registration process...');
     log('Request data: ${request.toJson()}');
     log('Dio base URL: ${_dio.options.baseUrl}');
-    
+
     try {
       log('Making POST request to /register...');
       final response = await _dio.post(
@@ -83,17 +84,20 @@ class AuthRepositoryImpl implements AuthRepository {
         data: request.toJson(),
         options: Options(
           headers: {'Accept': 'application/json'},
-          validateStatus: (status) => true, // Accept all status codes for debugging
+          validateStatus:
+              (status) => true, // Accept all status codes for debugging
         ),
       );
-      
+
       log('Response received:');
       log('Status code: ${response.statusCode}');
       log('Response data: ${response.data}');
       log('Response headers: ${response.headers}');
 
       if (response.statusCode != 200) {
-        throw ServerException('Server returned ${response.statusCode}: ${response.data}');
+        throw ServerException(
+          'Server returned ${response.statusCode}: ${response.data}',
+        );
       }
 
       // Extract token from the data object
@@ -149,6 +153,47 @@ class AuthRepositoryImpl implements AuthRepository {
     return token != null;
   }
 
+  @override
+  Future<User> updateUserDetails(Map<String, dynamic> data) async {
+    log('Updating user details...');
+    // Filter out null or empty string values before sending,
+    // as the API expects nullable fields but Dio might send empty strings otherwise.
+    final filteredData = Map<String, dynamic>.from(data)..removeWhere(
+      (key, value) => value == null || (value is String && value.isEmpty),
+    );
+    log('Filtered Data: $filteredData');
+
+    try {
+      final response = await _dio.patch(
+        '/settings',
+        data: filteredData, // Send filtered data
+        options: Options(headers: {'Accept': 'application/json'}),
+      );
+
+      log('Update response status: ${response.statusCode}');
+      log('Update response data: ${response.data}');
+
+      if (response.statusCode != 200) {
+        // Attempt to parse Laravel validation errors if status is 422
+        if (response.statusCode == 422 && response.data?['errors'] != null) {
+          throw ValidationException(response.data['errors']);
+        }
+        throw ServerException(
+          'Server returned ${response.statusCode}: ${response.data}',
+        );
+      }
+
+      // Assuming the response contains the updated user data under 'data' key
+      return User.fromJson(response.data['data']);
+    } on DioException catch (e) {
+      log('DioException during update: $e');
+      throw _handleDioException(e);
+    } catch (e) {
+      log('Unexpected error during update: $e');
+      throw ServerException('Unexpected error during update: $e');
+    }
+  }
+
   AppException _handleDioException(DioException e) {
     if (e.type == DioExceptionType.connectionTimeout) {
       return const NetworkException('Connection timeout');
@@ -174,9 +219,6 @@ class AuthRepositoryImpl implements AuthRepository {
 AuthRepository authRepository(AuthRepositoryRef ref) {
   final dio = ref.watch(dioProvider);
   final storage = ref.watch(secureStorageProvider);
-  
-  return AuthRepositoryImpl(
-    dio: dio,
-    storage: storage,
-  );
-} 
+
+  return AuthRepositoryImpl(dio: dio, storage: storage);
+}
