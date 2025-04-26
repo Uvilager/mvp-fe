@@ -148,7 +148,7 @@ class _ProjectDetailProviderElement
   int get projectId => (origin as ProjectDetailProvider).projectId;
 }
 
-String _$projectsHash() => r'711631313b7e24c7b8141909fa70dbeb5690196e';
+String _$projectsHash() => r'e10e989bcf52b0c3f8e536d0f6e5bee351945c6a';
 
 /// See also [Projects].
 @ProviderFor(Projects)

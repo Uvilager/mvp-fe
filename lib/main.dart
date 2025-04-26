@@ -1,25 +1,42 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:mvp_fe/core/providers/theme_provider.dart'; // Import theme provider
 import 'package:mvp_fe/core/routes/app_router.dart';
+import 'package:mvp_fe/core/theme/app_theme.dart'; // Import theme definitions
 
 void main() {
-  runApp(ProviderScope(child: MyApp()));
+  // Ensure widgets are initialized before loading theme preferences
+  WidgetsFlutterBinding.ensureInitialized();
+  runApp(const ProviderScope(child: MyApp()));
 }
 
 class MyApp extends ConsumerWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    // Watch the theme provider state
+    final themeModeAsyncValue = ref.watch(themeNotifierProvider);
     final router = ref.watch(routerProvider);
-    return MaterialApp(
+
+    // Use a default theme mode while loading, or handle error state
+    final currentThemeMode = themeModeAsyncValue.when(
+      data: (mode) => mode,
+      loading: () => ThemeMode.system, // Or ThemeMode.light
+      error: (err, stack) {
+        print('Error loading theme: $err');
+        return ThemeMode.system; // Fallback theme mode
+      },
+    );
+
+    // Corrected structure: Single MaterialApp with routerConfig
+    return MaterialApp.router(
+      routerConfig: router, // Use routerConfig directly
       debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-      ),
-      home: MaterialApp.router(routerConfig: router),
+      title: 'MVP App', // Updated title
+      theme: AppTheme.lightTheme, // Set light theme
+      darkTheme: AppTheme.darkTheme, // Set dark theme
+      themeMode: currentThemeMode, // Set theme mode from provider
     );
   }
 }
