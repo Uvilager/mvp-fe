@@ -16,7 +16,8 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$Organizer {
 
- int get id;@JsonKey(name: 'first_name') String get firstName;@JsonKey(name: 'last_name') String get lastName; String get username; String get phone; String get email; String get city; String get address;@JsonKey(name: 'postal_code') String get postalCode;@JsonKey(name: 'avatar_url') String get avatarUrl;@JsonKey(name: 'created_at') DateTime get createdAt;@JsonKey(name: 'updated_at') DateTime get updatedAt;
+ int get id; String? get district;// Added field
+@JsonKey(name: 'first_name') String get firstName;@JsonKey(name: 'last_name') String get lastName; String get username; String get phone; String get email; String get city; String get address;@JsonKey(name: 'postal_code') String get postalCode;@JsonKey(name: 'avatar_url') String get avatarUrl;@JsonKey(name: 'created_at') DateTime get createdAt;@JsonKey(name: 'updated_at') DateTime get updatedAt;
 /// Create a copy of Organizer
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -29,16 +30,16 @@ $OrganizerCopyWith<Organizer> get copyWith => _$OrganizerCopyWithImpl<Organizer>
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is Organizer&&(identical(other.id, id) || other.id == id)&&(identical(other.firstName, firstName) || other.firstName == firstName)&&(identical(other.lastName, lastName) || other.lastName == lastName)&&(identical(other.username, username) || other.username == username)&&(identical(other.phone, phone) || other.phone == phone)&&(identical(other.email, email) || other.email == email)&&(identical(other.city, city) || other.city == city)&&(identical(other.address, address) || other.address == address)&&(identical(other.postalCode, postalCode) || other.postalCode == postalCode)&&(identical(other.avatarUrl, avatarUrl) || other.avatarUrl == avatarUrl)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Organizer&&(identical(other.id, id) || other.id == id)&&(identical(other.district, district) || other.district == district)&&(identical(other.firstName, firstName) || other.firstName == firstName)&&(identical(other.lastName, lastName) || other.lastName == lastName)&&(identical(other.username, username) || other.username == username)&&(identical(other.phone, phone) || other.phone == phone)&&(identical(other.email, email) || other.email == email)&&(identical(other.city, city) || other.city == city)&&(identical(other.address, address) || other.address == address)&&(identical(other.postalCode, postalCode) || other.postalCode == postalCode)&&(identical(other.avatarUrl, avatarUrl) || other.avatarUrl == avatarUrl)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,firstName,lastName,username,phone,email,city,address,postalCode,avatarUrl,createdAt,updatedAt);
+int get hashCode => Object.hash(runtimeType,id,district,firstName,lastName,username,phone,email,city,address,postalCode,avatarUrl,createdAt,updatedAt);
 
 @override
 String toString() {
-  return 'Organizer(id: $id, firstName: $firstName, lastName: $lastName, username: $username, phone: $phone, email: $email, city: $city, address: $address, postalCode: $postalCode, avatarUrl: $avatarUrl, createdAt: $createdAt, updatedAt: $updatedAt)';
+  return 'Organizer(id: $id, district: $district, firstName: $firstName, lastName: $lastName, username: $username, phone: $phone, email: $email, city: $city, address: $address, postalCode: $postalCode, avatarUrl: $avatarUrl, createdAt: $createdAt, updatedAt: $updatedAt)';
 }
 
 
@@ -49,7 +50,7 @@ abstract mixin class $OrganizerCopyWith<$Res>  {
   factory $OrganizerCopyWith(Organizer value, $Res Function(Organizer) _then) = _$OrganizerCopyWithImpl;
 @useResult
 $Res call({
- int id,@JsonKey(name: 'first_name') String firstName,@JsonKey(name: 'last_name') String lastName, String username, String phone, String email, String city, String address,@JsonKey(name: 'postal_code') String postalCode,@JsonKey(name: 'avatar_url') String avatarUrl,@JsonKey(name: 'created_at') DateTime createdAt,@JsonKey(name: 'updated_at') DateTime updatedAt
+ int id, String? district,@JsonKey(name: 'first_name') String firstName,@JsonKey(name: 'last_name') String lastName, String username, String phone, String email, String city, String address,@JsonKey(name: 'postal_code') String postalCode,@JsonKey(name: 'avatar_url') String avatarUrl,@JsonKey(name: 'created_at') DateTime createdAt,@JsonKey(name: 'updated_at') DateTime updatedAt
 });
 
 
@@ -66,10 +67,11 @@ class _$OrganizerCopyWithImpl<$Res>
 
 /// Create a copy of Organizer
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? firstName = null,Object? lastName = null,Object? username = null,Object? phone = null,Object? email = null,Object? city = null,Object? address = null,Object? postalCode = null,Object? avatarUrl = null,Object? createdAt = null,Object? updatedAt = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? district = freezed,Object? firstName = null,Object? lastName = null,Object? username = null,Object? phone = null,Object? email = null,Object? city = null,Object? address = null,Object? postalCode = null,Object? avatarUrl = null,Object? createdAt = null,Object? updatedAt = null,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
-as int,firstName: null == firstName ? _self.firstName : firstName // ignore: cast_nullable_to_non_nullable
+as int,district: freezed == district ? _self.district : district // ignore: cast_nullable_to_non_nullable
+as String?,firstName: null == firstName ? _self.firstName : firstName // ignore: cast_nullable_to_non_nullable
 as String,lastName: null == lastName ? _self.lastName : lastName // ignore: cast_nullable_to_non_nullable
 as String,username: null == username ? _self.username : username // ignore: cast_nullable_to_non_nullable
 as String,phone: null == phone ? _self.phone : phone // ignore: cast_nullable_to_non_nullable
@@ -91,10 +93,12 @@ as DateTime,
 @JsonSerializable()
 
 class _Organizer implements Organizer {
-  const _Organizer({required this.id, @JsonKey(name: 'first_name') required this.firstName, @JsonKey(name: 'last_name') required this.lastName, required this.username, required this.phone, required this.email, required this.city, required this.address, @JsonKey(name: 'postal_code') required this.postalCode, @JsonKey(name: 'avatar_url') required this.avatarUrl, @JsonKey(name: 'created_at') required this.createdAt, @JsonKey(name: 'updated_at') required this.updatedAt});
+  const _Organizer({required this.id, this.district, @JsonKey(name: 'first_name') required this.firstName, @JsonKey(name: 'last_name') required this.lastName, required this.username, required this.phone, required this.email, required this.city, required this.address, @JsonKey(name: 'postal_code') required this.postalCode, @JsonKey(name: 'avatar_url') required this.avatarUrl, @JsonKey(name: 'created_at') required this.createdAt, @JsonKey(name: 'updated_at') required this.updatedAt});
   factory _Organizer.fromJson(Map<String, dynamic> json) => _$OrganizerFromJson(json);
 
 @override final  int id;
+@override final  String? district;
+// Added field
 @override@JsonKey(name: 'first_name') final  String firstName;
 @override@JsonKey(name: 'last_name') final  String lastName;
 @override final  String username;
@@ -120,16 +124,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Organizer&&(identical(other.id, id) || other.id == id)&&(identical(other.firstName, firstName) || other.firstName == firstName)&&(identical(other.lastName, lastName) || other.lastName == lastName)&&(identical(other.username, username) || other.username == username)&&(identical(other.phone, phone) || other.phone == phone)&&(identical(other.email, email) || other.email == email)&&(identical(other.city, city) || other.city == city)&&(identical(other.address, address) || other.address == address)&&(identical(other.postalCode, postalCode) || other.postalCode == postalCode)&&(identical(other.avatarUrl, avatarUrl) || other.avatarUrl == avatarUrl)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Organizer&&(identical(other.id, id) || other.id == id)&&(identical(other.district, district) || other.district == district)&&(identical(other.firstName, firstName) || other.firstName == firstName)&&(identical(other.lastName, lastName) || other.lastName == lastName)&&(identical(other.username, username) || other.username == username)&&(identical(other.phone, phone) || other.phone == phone)&&(identical(other.email, email) || other.email == email)&&(identical(other.city, city) || other.city == city)&&(identical(other.address, address) || other.address == address)&&(identical(other.postalCode, postalCode) || other.postalCode == postalCode)&&(identical(other.avatarUrl, avatarUrl) || other.avatarUrl == avatarUrl)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,firstName,lastName,username,phone,email,city,address,postalCode,avatarUrl,createdAt,updatedAt);
+int get hashCode => Object.hash(runtimeType,id,district,firstName,lastName,username,phone,email,city,address,postalCode,avatarUrl,createdAt,updatedAt);
 
 @override
 String toString() {
-  return 'Organizer(id: $id, firstName: $firstName, lastName: $lastName, username: $username, phone: $phone, email: $email, city: $city, address: $address, postalCode: $postalCode, avatarUrl: $avatarUrl, createdAt: $createdAt, updatedAt: $updatedAt)';
+  return 'Organizer(id: $id, district: $district, firstName: $firstName, lastName: $lastName, username: $username, phone: $phone, email: $email, city: $city, address: $address, postalCode: $postalCode, avatarUrl: $avatarUrl, createdAt: $createdAt, updatedAt: $updatedAt)';
 }
 
 
@@ -140,7 +144,7 @@ abstract mixin class _$OrganizerCopyWith<$Res> implements $OrganizerCopyWith<$Re
   factory _$OrganizerCopyWith(_Organizer value, $Res Function(_Organizer) _then) = __$OrganizerCopyWithImpl;
 @override @useResult
 $Res call({
- int id,@JsonKey(name: 'first_name') String firstName,@JsonKey(name: 'last_name') String lastName, String username, String phone, String email, String city, String address,@JsonKey(name: 'postal_code') String postalCode,@JsonKey(name: 'avatar_url') String avatarUrl,@JsonKey(name: 'created_at') DateTime createdAt,@JsonKey(name: 'updated_at') DateTime updatedAt
+ int id, String? district,@JsonKey(name: 'first_name') String firstName,@JsonKey(name: 'last_name') String lastName, String username, String phone, String email, String city, String address,@JsonKey(name: 'postal_code') String postalCode,@JsonKey(name: 'avatar_url') String avatarUrl,@JsonKey(name: 'created_at') DateTime createdAt,@JsonKey(name: 'updated_at') DateTime updatedAt
 });
 
 
@@ -157,10 +161,11 @@ class __$OrganizerCopyWithImpl<$Res>
 
 /// Create a copy of Organizer
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? firstName = null,Object? lastName = null,Object? username = null,Object? phone = null,Object? email = null,Object? city = null,Object? address = null,Object? postalCode = null,Object? avatarUrl = null,Object? createdAt = null,Object? updatedAt = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? district = freezed,Object? firstName = null,Object? lastName = null,Object? username = null,Object? phone = null,Object? email = null,Object? city = null,Object? address = null,Object? postalCode = null,Object? avatarUrl = null,Object? createdAt = null,Object? updatedAt = null,}) {
   return _then(_Organizer(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
-as int,firstName: null == firstName ? _self.firstName : firstName // ignore: cast_nullable_to_non_nullable
+as int,district: freezed == district ? _self.district : district // ignore: cast_nullable_to_non_nullable
+as String?,firstName: null == firstName ? _self.firstName : firstName // ignore: cast_nullable_to_non_nullable
 as String,lastName: null == lastName ? _self.lastName : lastName // ignore: cast_nullable_to_non_nullable
 as String,username: null == username ? _self.username : username // ignore: cast_nullable_to_non_nullable
 as String,phone: null == phone ? _self.phone : phone // ignore: cast_nullable_to_non_nullable

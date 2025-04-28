@@ -8,6 +8,7 @@ part 'organizer.g.dart';
 sealed class Organizer with _$Organizer {
   const factory Organizer({
     required int id,
+    String? district, // Added field
     @JsonKey(name: 'first_name') required String firstName,
     @JsonKey(name: 'last_name') required String lastName,
     required String username,
@@ -21,5 +22,6 @@ sealed class Organizer with _$Organizer {
     @JsonKey(name: 'updated_at') required DateTime updatedAt,
   }) = _Organizer;
 
-  factory Organizer.fromJson(Map<String, dynamic> json) => _$OrganizerFromJson(json);
-} 
+  factory Organizer.fromJson(Map<String, dynamic> json) =>
+      _$OrganizerFromJson(json);
+}

@@ -30,7 +30,14 @@ sealed class Project with _$Project {
     required List<Sponsor> sponsors,
     @JsonKey(name: 'created_at') required DateTime createdAt,
     @JsonKey(name: 'updated_at') required DateTime updatedAt,
+    // Added fields based on backend comparison
+    String? district,
+    @JsonKey(name: 'has_user_voted') bool? hasUserVoted,
+    @JsonKey(name: 'is_user_volunteer') bool? isUserVolunteer,
+    @JsonKey(name: 'volunteers_count') int? volunteersCount,
+    @JsonKey(name: 'leaders_count') int? leadersCount,
   }) = _Project;
 
-  factory Project.fromJson(Map<String, dynamic> json) => _$ProjectFromJson(json);
-} 
+  factory Project.fromJson(Map<String, dynamic> json) =>
+      _$ProjectFromJson(json);
+}

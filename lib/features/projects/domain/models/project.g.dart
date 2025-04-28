@@ -32,6 +32,11 @@ _Project _$ProjectFromJson(Map<String, dynamic> json) => _Project(
           .toList(),
   createdAt: DateTime.parse(json['created_at'] as String),
   updatedAt: DateTime.parse(json['updated_at'] as String),
+  district: json['district'] as String?,
+  hasUserVoted: json['has_user_voted'] as bool?,
+  isUserVolunteer: json['is_user_volunteer'] as bool?,
+  volunteersCount: (json['volunteers_count'] as num?)?.toInt(),
+  leadersCount: (json['leaders_count'] as num?)?.toInt(),
 );
 
 Map<String, dynamic> _$ProjectToJson(_Project instance) => <String, dynamic>{
@@ -54,4 +59,9 @@ Map<String, dynamic> _$ProjectToJson(_Project instance) => <String, dynamic>{
   'sponsors': instance.sponsors,
   'created_at': instance.createdAt.toIso8601String(),
   'updated_at': instance.updatedAt.toIso8601String(),
+  'district': instance.district,
+  'has_user_voted': instance.hasUserVoted,
+  'is_user_volunteer': instance.isUserVolunteer,
+  'volunteers_count': instance.volunteersCount,
+  'leaders_count': instance.leadersCount,
 };
