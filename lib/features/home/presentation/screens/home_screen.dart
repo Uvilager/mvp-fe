@@ -220,14 +220,8 @@ class HomeScreen extends ConsumerWidget {
                     backgroundColor: Colors.blue[100]!,
                     iconColor: Colors.blue[700]!,
                     onTap: () {
-                      // TODO: Navigate to My Projects Page (using GoRouter)
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text(
-                            'Navigate to My Projects (Not Implemented)',
-                          ),
-                        ),
-                      );
+                      // Navigate to the My Projects route
+                      GoRouter.of(context).go('/my-projects');
                     },
                   ),
                 ),

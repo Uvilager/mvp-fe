@@ -10,10 +10,11 @@ import '../../features/auth/presentation/screens/register/register_screen.dart';
 import '../../features/fundraisers/presentation/screens/fundraiser_show_screen.dart';
 import '../../features/fundraisers/presentation/screens/fundraisers_screen.dart';
 import '../../features/leaderboard/presentation/screens/leaderboard_screen.dart';
-import '../../features/projects/presentation/screens/project_detail_screen.dart'; // Added import for project detail
+import '../../features/projects/presentation/screens/project_detail_screen.dart';
 import '../../features/projects/presentation/screens/projects_screen.dart';
+import '../../features/projects/presentation/screens/my_projects_screen.dart'; // Import MyProjectsScreen
 import '../../features/home/presentation/screens/home_screen.dart';
-import '../../features/settings/presentation/screens/general_settings_screen.dart'; // Added import
+import '../../features/settings/presentation/screens/general_settings_screen.dart';
 import '../../features/settings/presentation/screens/settings_screen.dart';
 import '../../features/sponsors/presentation/screens/sponsors_screen.dart';
 import '../screens/main_screen.dart';
@@ -115,6 +116,19 @@ GoRouter router(RouterRef ref) {
                 },
               ),
             ],
+          ),
+          GoRoute(
+            // New route for My Projects within the shell
+            path: '/my-projects',
+            pageBuilder:
+                (context, state) => const NoTransitionPage(
+                  child:
+                      MyProjectsScreen(), // Use NoTransitionPage for tabs/shell routes
+                ),
+            // It could potentially have nested routes too, like project detail
+            // routes: [
+            //   GoRoute(path: ':id', builder: ...), // Similar to /projects/:id
+            // ]
           ),
           GoRoute(
             path: '/home',
