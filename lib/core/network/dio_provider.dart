@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'dart:developer';
 
@@ -52,9 +53,14 @@ class AuthInterceptor extends Interceptor {
 Dio dio(DioRef ref) {
   final storage = ref.watch(secureStorageProvider);
 
+  // Get base URL from environment variable, fallback to production URL
+  final baseUrl = 'https://api.mvpsrbije.com/v1';
+  
+  log('Using API Base URL: $baseUrl');
+
   final dio = Dio(
     BaseOptions(
-      baseUrl: 'https://api.mvpsrbije.com/v1',
+      baseUrl: baseUrl,
       headers: {'Accept': 'application/json'},
       connectTimeout: const Duration(seconds: 5),
       receiveTimeout: const Duration(seconds: 3),

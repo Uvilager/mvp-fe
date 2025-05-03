@@ -9,12 +9,10 @@ part 'dashboard_data.g.dart';
 @freezed
 abstract class DashboardData with _$DashboardData {
   const factory DashboardData({
-    required DashboardVolunteering volonteering, // Corrected spelling from API
-    required List<dynamic>
-    leading, // Assuming 'leading' is similar to 'volunteering' or just IDs for now
+    required DashboardVolunteering volunteering, // Corrected spelling from API
+    required List<dynamic> leading, // Use dynamic for now to avoid serialization issues
     required List<Project> projects,
-    required List<dynamic>
-    leaderboard, // Using dynamic for now, can refine if needed
+    List<dynamic>? leaderboard, // Make nullable since it can be null in API response
     required User user,
   }) = _DashboardData;
 

@@ -21,17 +21,20 @@ _Project _$ProjectFromJson(Map<String, dynamic> json) => _Project(
   downvotes: (json['downvotes'] as num).toInt(),
   budget: json['budget'] as String,
   pointsEarned: (json['points_earned'] as num).toInt(),
-  organizer: Organizer.fromJson(json['organizer'] as Map<String, dynamic>),
+  organizer:
+      json['organizer'] == null
+          ? null
+          : Organizer.fromJson(json['organizer'] as Map<String, dynamic>),
   tags:
-      (json['tags'] as List<dynamic>)
-          .map((e) => Tag.fromJson(e as Map<String, dynamic>))
+      (json['tags'] as List<dynamic>?)
+          ?.map((e) => Tag.fromJson(e as Map<String, dynamic>))
           .toList(),
   sponsors:
-      (json['sponsors'] as List<dynamic>)
-          .map((e) => Sponsor.fromJson(e as Map<String, dynamic>))
+      (json['sponsors'] as List<dynamic>?)
+          ?.map((e) => Sponsor.fromJson(e as Map<String, dynamic>))
           .toList(),
-  createdAt: DateTime.parse(json['created_at'] as String),
-  updatedAt: DateTime.parse(json['updated_at'] as String),
+  createdAt: _parseDateTime(json['created_at']),
+  updatedAt: _parseDateTime(json['updated_at']),
   district: json['district'] as String?,
   hasUserVoted: json['has_user_voted'] as bool?,
   isUserVolunteer: json['is_user_volunteer'] as bool?,

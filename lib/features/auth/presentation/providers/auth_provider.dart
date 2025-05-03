@@ -12,14 +12,24 @@ part 'auth_provider.g.dart';
 class Auth extends _$Auth {
   @override
   Future<AuthState> build() async {
+    print('🔐 Auth provider build() called');
     final repository = ref.watch(authRepositoryProvider);
 
     // Check if user is already authenticated
-    final user = await repository.getCurrentUser();
-    if (user != null) {
-      return AuthState.authenticated(user);
+    print('🔐 Checking current user...');
+    try {
+      final user = await repository.getCurrentUser();
+      if (user != null) {
+        print('🔐 User found: ${user.email}');
+        return AuthState.authenticated(user);
+      } else {
+        print('🔐 No user found');
+      }
+    } catch (e) {
+      print('🔐 Error getting current user: $e');
     }
 
+    print('🔐 Returning unauthenticated state');
     return const AuthState.unauthenticated();
   }
 

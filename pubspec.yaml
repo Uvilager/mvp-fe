@@ -43,6 +43,7 @@ dependencies:
   intl: ^0.19.0 # Added for formatting
   json_annotation: ^4.9.0
   shared_preferences: ^2.2.3 # Added for theme persistence
+  flutter_dotenv: ^5.2.1
 
 dev_dependencies:
   flutter_test:

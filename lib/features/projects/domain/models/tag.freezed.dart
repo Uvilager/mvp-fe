@@ -19,7 +19,7 @@ mixin _$Tag {
  int get id; String get name;// Removed slug as it's not in the backend model
 // required String slug,
 // Added timestamps from backend model
-@JsonKey(name: 'created_at') DateTime? get createdAt;@JsonKey(name: 'updated_at') DateTime? get updatedAt;
+@JsonKey(name: 'created_at', fromJson: _parseDateTimeNullable) DateTime? get createdAt;@JsonKey(name: 'updated_at', fromJson: _parseDateTimeNullable) DateTime? get updatedAt;
 /// Create a copy of Tag
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -52,7 +52,7 @@ abstract mixin class $TagCopyWith<$Res>  {
   factory $TagCopyWith(Tag value, $Res Function(Tag) _then) = _$TagCopyWithImpl;
 @useResult
 $Res call({
- int id, String name,@JsonKey(name: 'created_at') DateTime? createdAt,@JsonKey(name: 'updated_at') DateTime? updatedAt
+ int id, String name,@JsonKey(name: 'created_at', fromJson: _parseDateTimeNullable) DateTime? createdAt,@JsonKey(name: 'updated_at', fromJson: _parseDateTimeNullable) DateTime? updatedAt
 });
 
 
@@ -86,7 +86,7 @@ as DateTime?,
 @JsonSerializable()
 
 class _Tag implements Tag {
-  const _Tag({required this.id, required this.name, @JsonKey(name: 'created_at') this.createdAt, @JsonKey(name: 'updated_at') this.updatedAt});
+  const _Tag({required this.id, required this.name, @JsonKey(name: 'created_at', fromJson: _parseDateTimeNullable) this.createdAt, @JsonKey(name: 'updated_at', fromJson: _parseDateTimeNullable) this.updatedAt});
   factory _Tag.fromJson(Map<String, dynamic> json) => _$TagFromJson(json);
 
 @override final  int id;
@@ -94,8 +94,8 @@ class _Tag implements Tag {
 // Removed slug as it's not in the backend model
 // required String slug,
 // Added timestamps from backend model
-@override@JsonKey(name: 'created_at') final  DateTime? createdAt;
-@override@JsonKey(name: 'updated_at') final  DateTime? updatedAt;
+@override@JsonKey(name: 'created_at', fromJson: _parseDateTimeNullable) final  DateTime? createdAt;
+@override@JsonKey(name: 'updated_at', fromJson: _parseDateTimeNullable) final  DateTime? updatedAt;
 
 /// Create a copy of Tag
 /// with the given fields replaced by the non-null parameter values.
@@ -130,7 +130,7 @@ abstract mixin class _$TagCopyWith<$Res> implements $TagCopyWith<$Res> {
   factory _$TagCopyWith(_Tag value, $Res Function(_Tag) _then) = __$TagCopyWithImpl;
 @override @useResult
 $Res call({
- int id, String name,@JsonKey(name: 'created_at') DateTime? createdAt,@JsonKey(name: 'updated_at') DateTime? updatedAt
+ int id, String name,@JsonKey(name: 'created_at', fromJson: _parseDateTimeNullable) DateTime? createdAt,@JsonKey(name: 'updated_at', fromJson: _parseDateTimeNullable) DateTime? updatedAt
 });
 
 

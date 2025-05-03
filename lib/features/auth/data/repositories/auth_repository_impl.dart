@@ -44,9 +44,13 @@ class AuthRepositoryImpl implements AuthRepository {
       log('Response headers: ${response.headers}');
 
       if (response.statusCode != 200) {
-        throw ServerException(
-          'Server returned ${response.statusCode}: ${response.data}',
+        // Create a fake DioException to reuse the error handling logic
+        final dioException = DioException(
+          requestOptions: response.requestOptions,
+          response: response,
+          type: DioExceptionType.badResponse,
         );
+        throw _handleDioException(dioException);
       }
 
       // Extract token from the data object
@@ -65,6 +69,10 @@ class AuthRepositoryImpl implements AuthRepository {
       log('Response: ${e.response?.data}');
       log('Error: ${e.error}');
       throw _handleDioException(e);
+    } on AppException {
+      // Don't wrap AppExceptions (AuthException, ValidationException, etc.)
+      log('AppException caught, re-throwing without wrapping');
+      rethrow;
     } catch (e) {
       log('Unexpected error: $e');
       throw ServerException('Unexpected error: $e');
@@ -95,9 +103,13 @@ class AuthRepositoryImpl implements AuthRepository {
       log('Response headers: ${response.headers}');
 
       if (response.statusCode != 200) {
-        throw ServerException(
-          'Server returned ${response.statusCode}: ${response.data}',
+        // Create a fake DioException to reuse the error handling logic
+        final dioException = DioException(
+          requestOptions: response.requestOptions,
+          response: response,
+          type: DioExceptionType.badResponse,
         );
+        throw _handleDioException(dioException);
       }
 
       // Extract token from the data object
@@ -114,6 +126,10 @@ class AuthRepositoryImpl implements AuthRepository {
       log('Response: ${e.response?.data}');
       log('Error: ${e.error}');
       throw _handleDioException(e);
+    } on AppException {
+      // Don't wrap AppExceptions (AuthException, ValidationException, etc.)
+      log('AppException caught, re-throwing without wrapping');
+      rethrow;
     } catch (e) {
       log('Unexpected error: $e');
       throw ServerException('Unexpected error: $e');
@@ -195,6 +211,11 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   AppException _handleDioException(DioException e) {
+    log('_handleDioException called');
+    log('Exception type: ${e.type}');
+    log('Status code: ${e.response?.statusCode}');
+    log('Response data: ${e.response?.data}');
+    
     if (e.type == DioExceptionType.connectionTimeout) {
       return const NetworkException('Connection timeout');
     }
@@ -203,13 +224,48 @@ class AuthRepositoryImpl implements AuthRepository {
       return const NetworkException('No internet connection');
     }
 
+    final responseData = e.response!.data;
+    log('Extracted responseData: $responseData');
+    log('ResponseData type: ${responseData.runtimeType}');
+    
     switch (e.response!.statusCode) {
+      case 302:
+        log('Handling 302 status code');
+        // Handle the specific format: {status: 302, message: "Login failed.", data: "Incorrect password."}
+        if (responseData is Map<String, dynamic>) {
+          log('ResponseData is Map, extracting error message...');
+          final dataField = responseData['data'];
+          final messageField = responseData['message'];
+          log('Data field: $dataField');
+          log('Message field: $messageField');
+          
+          final errorMessage = dataField?.toString() ?? 
+                              messageField?.toString() ?? 
+                              'Authentication failed';
+          log('Final error message: $errorMessage');
+          
+          final authException = AuthException(errorMessage);
+          log('Created AuthException: $authException');
+          return authException;
+        }
+        log('ResponseData is not Map, returning default AuthException');
+        return const AuthException('Authentication failed');
       case 401:
+        log('Handling 401 status code');
         return const AuthException('Invalid credentials');
       case 422:
-        final errors = e.response!.data['errors'] as Map<String, dynamic>;
+        log('Handling 422 status code');
+        final errors = responseData['errors'] as Map<String, dynamic>;
         return ValidationException(errors);
       default:
+        log('Handling default status code: ${e.response!.statusCode}');
+        // Try to extract a meaningful error message from the response
+        if (responseData is Map<String, dynamic>) {
+          final errorMessage = responseData['data']?.toString() ?? 
+                              responseData['message']?.toString() ?? 
+                              'Something went wrong';
+          return ServerException(errorMessage);
+        }
         return const ServerException('Something went wrong');
     }
   }

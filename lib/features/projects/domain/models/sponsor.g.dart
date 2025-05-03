@@ -17,23 +17,11 @@ _Sponsor _$SponsorFromJson(Map<String, dynamic> json) => _Sponsor(
   contactEmail: json['contact_email'] as String?,
   campaignUrl: json['campaign_url'] as String?,
   body: json['body'] as String?,
-  startedAt:
-      json['started_at'] == null
-          ? null
-          : DateTime.parse(json['started_at'] as String),
-  endedAt:
-      json['ended_at'] == null
-          ? null
-          : DateTime.parse(json['ended_at'] as String),
+  startedAt: _parseDateTimeNullable(json['started_at']),
+  endedAt: _parseDateTimeNullable(json['ended_at']),
   order: (json['order'] as num?)?.toInt(),
-  createdAt:
-      json['created_at'] == null
-          ? null
-          : DateTime.parse(json['created_at'] as String),
-  updatedAt:
-      json['updated_at'] == null
-          ? null
-          : DateTime.parse(json['updated_at'] as String),
+  createdAt: _parseDateTimeNullable(json['created_at']),
+  updatedAt: _parseDateTimeNullable(json['updated_at']),
 );
 
 Map<String, dynamic> _$SponsorToJson(_Sponsor instance) => <String, dynamic>{

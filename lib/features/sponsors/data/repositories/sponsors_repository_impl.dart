@@ -72,4 +72,89 @@ class SponsorsRepositoryImpl implements SponsorsRepository {
       throw Exception('An unexpected error occurred while loading sponsors.');
     }
   }
+
+  @override
+  Future<Sponsor> getSponsor(int id) async {
+    try {
+      final response = await _dio.get('/sponsors/$id');
+
+      if (response.statusCode == 200 && response.data != null) {
+        Map<String, dynamic> responseData;
+        if (response.data is Map<String, dynamic>) {
+          responseData = response.data;
+        } else if (response.data is String) {
+          responseData =
+              jsonDecode(response.data as String) as Map<String, dynamic>;
+        } else {
+          throw Exception(
+            'Unexpected response data type: ${response.data.runtimeType}',
+          );
+        }
+
+        if (responseData.containsKey('data') && responseData['data']['sponsor'] != null) {
+          final sponsor = Sponsor.fromJson(responseData['data']['sponsor'] as Map<String, dynamic>);
+          // Store the full response data in a way that can be accessed later
+          // For now, just return the sponsor - we'll access projects differently
+          return sponsor;
+        } else {
+          throw Exception(
+            'Invalid response format: "data.sponsor" key is missing.',
+          );
+        }
+      } else {
+        throw Exception(
+          'Failed to load sponsor: Status code ${response.statusCode}',
+        );
+      }
+    } on DioException catch (e) {
+      print(
+        'DioError fetching sponsor: ${e.message}',
+      ); // TODO: Replace with proper logging
+      throw Exception('Network error fetching sponsor: ${e.message}');
+    } catch (e) {
+      print('Error fetching sponsor: $e'); // TODO: Replace with proper logging
+      throw Exception('An unexpected error occurred while loading sponsor.');
+    }
+  }
+
+  @override
+  Future<Map<String, dynamic>> getSponsorWithProjects(int id) async {
+    try {
+      final response = await _dio.get('/sponsors/$id');
+
+      if (response.statusCode == 200 && response.data != null) {
+        Map<String, dynamic> responseData;
+        if (response.data is Map<String, dynamic>) {
+          responseData = response.data;
+        } else if (response.data is String) {
+          responseData =
+              jsonDecode(response.data as String) as Map<String, dynamic>;
+        } else {
+          throw Exception(
+            'Unexpected response data type: ${response.data.runtimeType}',
+          );
+        }
+
+        if (responseData.containsKey('data')) {
+          return responseData['data'] as Map<String, dynamic>;
+        } else {
+          throw Exception(
+            'Invalid response format: "data" key is missing.',
+          );
+        }
+      } else {
+        throw Exception(
+          'Failed to load sponsor with projects: Status code ${response.statusCode}',
+        );
+      }
+    } on DioException catch (e) {
+      print(
+        'DioError fetching sponsor with projects: ${e.message}',
+      ); // TODO: Replace with proper logging
+      throw Exception('Network error fetching sponsor with projects: ${e.message}');
+    } catch (e) {
+      print('Error fetching sponsor with projects: $e'); // TODO: Replace with proper logging
+      throw Exception('An unexpected error occurred while loading sponsor with projects.');
+    }
+  }
 }

@@ -17,9 +17,9 @@ _Organizer _$OrganizerFromJson(Map<String, dynamic> json) => _Organizer(
   city: json['city'] as String,
   address: json['address'] as String,
   postalCode: json['postal_code'] as String,
-  avatarUrl: json['avatar_url'] as String,
-  createdAt: DateTime.parse(json['created_at'] as String),
-  updatedAt: DateTime.parse(json['updated_at'] as String),
+  avatarUrl: json['avatar_url'] as String?,
+  createdAt: _parseDateTime(json['created_at']),
+  updatedAt: _parseDateTime(json['updated_at']),
 );
 
 Map<String, dynamic> _$OrganizerToJson(_Organizer instance) =>

@@ -17,7 +17,7 @@ T _$identity<T>(T value) => value;
 mixin _$Organizer {
 
  int get id; String? get district;// Added field
-@JsonKey(name: 'first_name') String get firstName;@JsonKey(name: 'last_name') String get lastName; String get username; String get phone; String get email; String get city; String get address;@JsonKey(name: 'postal_code') String get postalCode;@JsonKey(name: 'avatar_url') String get avatarUrl;@JsonKey(name: 'created_at') DateTime get createdAt;@JsonKey(name: 'updated_at') DateTime get updatedAt;
+@JsonKey(name: 'first_name') String get firstName;@JsonKey(name: 'last_name') String get lastName; String get username; String get phone; String get email; String get city; String get address;@JsonKey(name: 'postal_code') String get postalCode;@JsonKey(name: 'avatar_url') String? get avatarUrl;@JsonKey(name: 'created_at', fromJson: _parseDateTime) DateTime get createdAt;@JsonKey(name: 'updated_at', fromJson: _parseDateTime) DateTime get updatedAt;
 /// Create a copy of Organizer
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -50,7 +50,7 @@ abstract mixin class $OrganizerCopyWith<$Res>  {
   factory $OrganizerCopyWith(Organizer value, $Res Function(Organizer) _then) = _$OrganizerCopyWithImpl;
 @useResult
 $Res call({
- int id, String? district,@JsonKey(name: 'first_name') String firstName,@JsonKey(name: 'last_name') String lastName, String username, String phone, String email, String city, String address,@JsonKey(name: 'postal_code') String postalCode,@JsonKey(name: 'avatar_url') String avatarUrl,@JsonKey(name: 'created_at') DateTime createdAt,@JsonKey(name: 'updated_at') DateTime updatedAt
+ int id, String? district,@JsonKey(name: 'first_name') String firstName,@JsonKey(name: 'last_name') String lastName, String username, String phone, String email, String city, String address,@JsonKey(name: 'postal_code') String postalCode,@JsonKey(name: 'avatar_url') String? avatarUrl,@JsonKey(name: 'created_at', fromJson: _parseDateTime) DateTime createdAt,@JsonKey(name: 'updated_at', fromJson: _parseDateTime) DateTime updatedAt
 });
 
 
@@ -67,7 +67,7 @@ class _$OrganizerCopyWithImpl<$Res>
 
 /// Create a copy of Organizer
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? district = freezed,Object? firstName = null,Object? lastName = null,Object? username = null,Object? phone = null,Object? email = null,Object? city = null,Object? address = null,Object? postalCode = null,Object? avatarUrl = null,Object? createdAt = null,Object? updatedAt = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? district = freezed,Object? firstName = null,Object? lastName = null,Object? username = null,Object? phone = null,Object? email = null,Object? city = null,Object? address = null,Object? postalCode = null,Object? avatarUrl = freezed,Object? createdAt = null,Object? updatedAt = null,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as int,district: freezed == district ? _self.district : district // ignore: cast_nullable_to_non_nullable
@@ -79,8 +79,8 @@ as String,email: null == email ? _self.email : email // ignore: cast_nullable_to
 as String,city: null == city ? _self.city : city // ignore: cast_nullable_to_non_nullable
 as String,address: null == address ? _self.address : address // ignore: cast_nullable_to_non_nullable
 as String,postalCode: null == postalCode ? _self.postalCode : postalCode // ignore: cast_nullable_to_non_nullable
-as String,avatarUrl: null == avatarUrl ? _self.avatarUrl : avatarUrl // ignore: cast_nullable_to_non_nullable
-as String,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
+as String,avatarUrl: freezed == avatarUrl ? _self.avatarUrl : avatarUrl // ignore: cast_nullable_to_non_nullable
+as String?,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
 as DateTime,updatedAt: null == updatedAt ? _self.updatedAt : updatedAt // ignore: cast_nullable_to_non_nullable
 as DateTime,
   ));
@@ -93,7 +93,7 @@ as DateTime,
 @JsonSerializable()
 
 class _Organizer implements Organizer {
-  const _Organizer({required this.id, this.district, @JsonKey(name: 'first_name') required this.firstName, @JsonKey(name: 'last_name') required this.lastName, required this.username, required this.phone, required this.email, required this.city, required this.address, @JsonKey(name: 'postal_code') required this.postalCode, @JsonKey(name: 'avatar_url') required this.avatarUrl, @JsonKey(name: 'created_at') required this.createdAt, @JsonKey(name: 'updated_at') required this.updatedAt});
+  const _Organizer({required this.id, this.district, @JsonKey(name: 'first_name') required this.firstName, @JsonKey(name: 'last_name') required this.lastName, required this.username, required this.phone, required this.email, required this.city, required this.address, @JsonKey(name: 'postal_code') required this.postalCode, @JsonKey(name: 'avatar_url') this.avatarUrl, @JsonKey(name: 'created_at', fromJson: _parseDateTime) required this.createdAt, @JsonKey(name: 'updated_at', fromJson: _parseDateTime) required this.updatedAt});
   factory _Organizer.fromJson(Map<String, dynamic> json) => _$OrganizerFromJson(json);
 
 @override final  int id;
@@ -107,9 +107,9 @@ class _Organizer implements Organizer {
 @override final  String city;
 @override final  String address;
 @override@JsonKey(name: 'postal_code') final  String postalCode;
-@override@JsonKey(name: 'avatar_url') final  String avatarUrl;
-@override@JsonKey(name: 'created_at') final  DateTime createdAt;
-@override@JsonKey(name: 'updated_at') final  DateTime updatedAt;
+@override@JsonKey(name: 'avatar_url') final  String? avatarUrl;
+@override@JsonKey(name: 'created_at', fromJson: _parseDateTime) final  DateTime createdAt;
+@override@JsonKey(name: 'updated_at', fromJson: _parseDateTime) final  DateTime updatedAt;
 
 /// Create a copy of Organizer
 /// with the given fields replaced by the non-null parameter values.
@@ -144,7 +144,7 @@ abstract mixin class _$OrganizerCopyWith<$Res> implements $OrganizerCopyWith<$Re
   factory _$OrganizerCopyWith(_Organizer value, $Res Function(_Organizer) _then) = __$OrganizerCopyWithImpl;
 @override @useResult
 $Res call({
- int id, String? district,@JsonKey(name: 'first_name') String firstName,@JsonKey(name: 'last_name') String lastName, String username, String phone, String email, String city, String address,@JsonKey(name: 'postal_code') String postalCode,@JsonKey(name: 'avatar_url') String avatarUrl,@JsonKey(name: 'created_at') DateTime createdAt,@JsonKey(name: 'updated_at') DateTime updatedAt
+ int id, String? district,@JsonKey(name: 'first_name') String firstName,@JsonKey(name: 'last_name') String lastName, String username, String phone, String email, String city, String address,@JsonKey(name: 'postal_code') String postalCode,@JsonKey(name: 'avatar_url') String? avatarUrl,@JsonKey(name: 'created_at', fromJson: _parseDateTime) DateTime createdAt,@JsonKey(name: 'updated_at', fromJson: _parseDateTime) DateTime updatedAt
 });
 
 
@@ -161,7 +161,7 @@ class __$OrganizerCopyWithImpl<$Res>
 
 /// Create a copy of Organizer
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? district = freezed,Object? firstName = null,Object? lastName = null,Object? username = null,Object? phone = null,Object? email = null,Object? city = null,Object? address = null,Object? postalCode = null,Object? avatarUrl = null,Object? createdAt = null,Object? updatedAt = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? district = freezed,Object? firstName = null,Object? lastName = null,Object? username = null,Object? phone = null,Object? email = null,Object? city = null,Object? address = null,Object? postalCode = null,Object? avatarUrl = freezed,Object? createdAt = null,Object? updatedAt = null,}) {
   return _then(_Organizer(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as int,district: freezed == district ? _self.district : district // ignore: cast_nullable_to_non_nullable
@@ -173,8 +173,8 @@ as String,email: null == email ? _self.email : email // ignore: cast_nullable_to
 as String,city: null == city ? _self.city : city // ignore: cast_nullable_to_non_nullable
 as String,address: null == address ? _self.address : address // ignore: cast_nullable_to_non_nullable
 as String,postalCode: null == postalCode ? _self.postalCode : postalCode // ignore: cast_nullable_to_non_nullable
-as String,avatarUrl: null == avatarUrl ? _self.avatarUrl : avatarUrl // ignore: cast_nullable_to_non_nullable
-as String,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
+as String,avatarUrl: freezed == avatarUrl ? _self.avatarUrl : avatarUrl // ignore: cast_nullable_to_non_nullable
+as String?,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
 as DateTime,updatedAt: null == updatedAt ? _self.updatedAt : updatedAt // ignore: cast_nullable_to_non_nullable
 as DateTime,
   ));

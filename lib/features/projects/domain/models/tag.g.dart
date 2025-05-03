@@ -9,14 +9,8 @@ part of 'tag.dart';
 _Tag _$TagFromJson(Map<String, dynamic> json) => _Tag(
   id: (json['id'] as num).toInt(),
   name: json['name'] as String,
-  createdAt:
-      json['created_at'] == null
-          ? null
-          : DateTime.parse(json['created_at'] as String),
-  updatedAt:
-      json['updated_at'] == null
-          ? null
-          : DateTime.parse(json['updated_at'] as String),
+  createdAt: _parseDateTimeNullable(json['created_at']),
+  updatedAt: _parseDateTimeNullable(json['updated_at']),
 );
 
 Map<String, dynamic> _$TagToJson(_Tag instance) => <String, dynamic>{

@@ -22,13 +22,51 @@ class DashboardRepositoryImpl implements DashboardRepository {
   @override
   Future<DashboardData> getDashboardData() async {
     try {
+      print('📡 Making request to /dashboard');
       final response = await _dio.get('/dashboard');
+      print('📡 Response received: ${response.statusCode}');
+      print('📡 Response data type: ${response.data.runtimeType}');
+      print('📡 Response data keys: ${response.data is Map ? (response.data as Map).keys.toList() : 'Not a Map'}');
 
       if (response.statusCode == 200 && response.data != null) {
         // Assuming the actual data is nested under a 'data' key
         if (response.data['data'] is Map<String, dynamic>) {
-          return DashboardData.fromJson(response.data['data']);
+          print('📡 Data field type: ${response.data['data'].runtimeType}');
+          print('📡 Data field keys: ${(response.data['data'] as Map).keys.toList()}');
+          
+          // Check specific fields that might be causing issues
+          final data = response.data['data'] as Map<String, dynamic>;
+          print('📡 Leading field: ${data['leading']}');
+          print('📡 Leading type: ${data['leading'].runtimeType}');
+          print('📡 Leaderboard field: ${data['leaderboard']}');
+          print('📡 Leaderboard type: ${data['leaderboard'].runtimeType}');
+          
+          if (data['leading'] is List) {
+            final leadingList = data['leading'] as List;
+            print('📡 Leading list length: ${leadingList.length}');
+            for (int i = 0; i < leadingList.length; i++) {
+              print('📡 Leading[$i]: ${leadingList[i]}');
+              print('📡 Leading[$i] type: ${leadingList[i].runtimeType}');
+              if (leadingList[i] is Map) {
+                final leadingItem = leadingList[i] as Map;
+                print('📡 Leading[$i] keys: ${leadingItem.keys.toList()}');
+                if (leadingItem.containsKey('project')) {
+                  print('📡 Leading[$i].project: ${leadingItem['project']}');
+                  print('📡 Leading[$i].project type: ${leadingItem['project'].runtimeType}');
+                }
+              }
+            }
+          }
+          
+          try {
+            return DashboardData.fromJson(response.data['data']);
+          } catch (e, stackTrace) {
+            print('📡 JSON parsing error: $e');
+            print('📡 Stack trace: $stackTrace');
+            rethrow;
+          }
         } else {
+          print('📡 Data field is not Map<String, dynamic>: ${response.data['data'].runtimeType}');
           throw Exception('Dashboard data format is incorrect.');
         }
       } else {
@@ -41,12 +79,8 @@ class DashboardRepositoryImpl implements DashboardRepository {
         );
       }
     } on DioException catch (e) {
-      // Log and re-throw DioException
-      print('Failed to load dashboard data: ${e.response?.data ?? e.message}');
-      throw e;
-    } catch (e) {
-      // Catch any other unexpected errors
-      print('Unexpected error loading dashboard data: $e');
+      rethrow;
+    } catch (e, stackTrace) {
       throw Exception('An unexpected error occurred: $e');
     }
   }

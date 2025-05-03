@@ -13,10 +13,15 @@ import '../../features/leaderboard/presentation/screens/leaderboard_screen.dart'
 import '../../features/projects/presentation/screens/project_detail_screen.dart';
 import '../../features/projects/presentation/screens/projects_screen.dart';
 import '../../features/projects/presentation/screens/my_projects_screen.dart'; // Import MyProjectsScreen
+import '../../features/projects/presentation/screens/volunteer_project_screen.dart';
 import '../../features/home/presentation/screens/home_screen.dart';
 import '../../features/settings/presentation/screens/general_settings_screen.dart';
 import '../../features/settings/presentation/screens/settings_screen.dart';
+import '../../features/settings/presentation/screens/settings_leaderboard_screen.dart';
+import '../../features/settings/presentation/screens/settings_profile_screen.dart';
+import '../../features/settings/presentation/screens/settings_password_screen.dart';
 import '../../features/sponsors/presentation/screens/sponsors_screen.dart';
+import '../../features/sponsors/presentation/screens/sponsor_show_screen.dart';
 import '../screens/main_screen.dart';
 
 part 'app_router.g.dart';
@@ -41,17 +46,22 @@ GoRouter router(RouterRef ref) {
       final isRegistering = state.matchedLocation == '/register';
       final isAuthRoute = isLoggingIn || isRegistering;
 
+      print('🚦 Router redirect - Location: ${state.matchedLocation}, Auth: $isAuthenticated, AuthRoute: $isAuthRoute');
+
       // If not logged in and not on an auth route, redirect to login
       if (!isAuthenticated && !isAuthRoute) {
+        print('🚦 Redirecting to login');
         return '/login';
       }
 
       // If logged in and trying to access login/register, redirect to home
       if (isAuthenticated && isAuthRoute) {
+        print('🚦 Redirecting to home');
         return '/home';
       }
 
       // No redirect needed
+      print('🚦 No redirect needed');
       return null;
     },
 
@@ -68,17 +78,42 @@ GoRouter router(RouterRef ref) {
         path: '/leaderboard',
         builder: (context, state) => const LeaderboardScreen(),
       ),
+      // Settings sub-screens (outside the shell)
       GoRoute(
-        // Settings screen, outside the shell but requires auth
         parentNavigatorKey: _rootNavigatorKey,
-        path: '/settings',
-        builder: (context, state) => const SettingsScreen(),
+        path: '/settings/leaderboard',
+        builder: (context, state) => const SettingsLeaderboardScreen(),
+      ),
+      GoRoute(
+        parentNavigatorKey: _rootNavigatorKey,
+        path: '/settings/profile',
+        builder: (context, state) => const SettingsProfileScreen(),
+      ),
+      GoRoute(
+        parentNavigatorKey: _rootNavigatorKey,
+        path: '/settings/password',
+        builder: (context, state) => const SettingsPasswordScreen(),
       ),
       GoRoute(
         // General Settings screen, also outside the shell
         parentNavigatorKey: _rootNavigatorKey,
         path: '/settings/general',
         builder: (context, state) => const GeneralSettingsScreen(),
+      ),
+      GoRoute(
+        // Volunteer Project screen, outside the shell for full functionality
+        parentNavigatorKey: _rootNavigatorKey,
+        path: '/volunteer-project/:id',
+        builder: (context, state) {
+          final idString = state.pathParameters['id'];
+          final id = int.tryParse(idString ?? '');
+          if (id == null) {
+            return const Scaffold(
+              body: Center(child: Text('Invalid Project ID')),
+            );
+          }
+          return VolunteerProjectScreen(projectId: id);
+        },
       ),
 
       // ShellRoute for main navigation with BottomNavigationBar
@@ -172,6 +207,32 @@ GoRouter router(RouterRef ref) {
             pageBuilder:
                 (context, state) => const NoTransitionPage(
                   child: SponsorsScreen(), // Use NoTransitionPage for tabs
+                ),
+            routes: [
+              // Nested Sponsor detail route *within* the shell
+              GoRoute(
+                path: ':id', // e.g., /sponsors/123
+                // No parentNavigatorKey needed, defaults to shell's navigator
+                builder: (context, state) {
+                  final idString = state.pathParameters['id'];
+                  final id = int.tryParse(idString ?? '');
+                  if (id == null) {
+                    // TODO: Improve error handling
+                    return const Scaffold(
+                      body: Center(child: Text('Invalid Sponsor ID')),
+                    );
+                  }
+                  // This screen will be pushed *onto* the shell navigator stack
+                  return SponsorShowScreen(sponsorId: id);
+                },
+              ),
+            ],
+          ),
+          GoRoute(
+            path: '/settings',
+            pageBuilder:
+                (context, state) => const NoTransitionPage(
+                  child: SettingsScreen(), // Use NoTransitionPage for tabs
                 ),
           ),
         ],

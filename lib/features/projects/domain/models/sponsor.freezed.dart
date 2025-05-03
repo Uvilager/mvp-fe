@@ -19,7 +19,7 @@ mixin _$Sponsor {
  int get id;// Renamed from name
  String get title;// Renamed from websiteUrl and added JsonKey
 @JsonKey(name: 'website') String get website;@JsonKey(name: 'logo_url') String get logoUrl;// Added missing fields
- String? get description; String get status;@JsonKey(name: 'contact_phone') String? get contactPhone;@JsonKey(name: 'contact_email') String? get contactEmail;@JsonKey(name: 'campaign_url') String? get campaignUrl; String? get body;@JsonKey(name: 'started_at') DateTime? get startedAt;@JsonKey(name: 'ended_at') DateTime? get endedAt; int? get order;@JsonKey(name: 'created_at') DateTime? get createdAt;@JsonKey(name: 'updated_at') DateTime? get updatedAt;
+ String? get description; String get status;@JsonKey(name: 'contact_phone') String? get contactPhone;@JsonKey(name: 'contact_email') String? get contactEmail;@JsonKey(name: 'campaign_url') String? get campaignUrl; String? get body;@JsonKey(name: 'started_at', fromJson: _parseDateTimeNullable) DateTime? get startedAt;@JsonKey(name: 'ended_at', fromJson: _parseDateTimeNullable) DateTime? get endedAt; int? get order;@JsonKey(name: 'created_at', fromJson: _parseDateTimeNullable) DateTime? get createdAt;@JsonKey(name: 'updated_at', fromJson: _parseDateTimeNullable) DateTime? get updatedAt;
 /// Create a copy of Sponsor
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -52,7 +52,7 @@ abstract mixin class $SponsorCopyWith<$Res>  {
   factory $SponsorCopyWith(Sponsor value, $Res Function(Sponsor) _then) = _$SponsorCopyWithImpl;
 @useResult
 $Res call({
- int id, String title,@JsonKey(name: 'website') String website,@JsonKey(name: 'logo_url') String logoUrl, String? description, String status,@JsonKey(name: 'contact_phone') String? contactPhone,@JsonKey(name: 'contact_email') String? contactEmail,@JsonKey(name: 'campaign_url') String? campaignUrl, String? body,@JsonKey(name: 'started_at') DateTime? startedAt,@JsonKey(name: 'ended_at') DateTime? endedAt, int? order,@JsonKey(name: 'created_at') DateTime? createdAt,@JsonKey(name: 'updated_at') DateTime? updatedAt
+ int id, String title,@JsonKey(name: 'website') String website,@JsonKey(name: 'logo_url') String logoUrl, String? description, String status,@JsonKey(name: 'contact_phone') String? contactPhone,@JsonKey(name: 'contact_email') String? contactEmail,@JsonKey(name: 'campaign_url') String? campaignUrl, String? body,@JsonKey(name: 'started_at', fromJson: _parseDateTimeNullable) DateTime? startedAt,@JsonKey(name: 'ended_at', fromJson: _parseDateTimeNullable) DateTime? endedAt, int? order,@JsonKey(name: 'created_at', fromJson: _parseDateTimeNullable) DateTime? createdAt,@JsonKey(name: 'updated_at', fromJson: _parseDateTimeNullable) DateTime? updatedAt
 });
 
 
@@ -97,7 +97,7 @@ as DateTime?,
 @JsonSerializable()
 
 class _Sponsor implements Sponsor {
-  const _Sponsor({required this.id, required this.title, @JsonKey(name: 'website') required this.website, @JsonKey(name: 'logo_url') required this.logoUrl, this.description, required this.status, @JsonKey(name: 'contact_phone') this.contactPhone, @JsonKey(name: 'contact_email') this.contactEmail, @JsonKey(name: 'campaign_url') this.campaignUrl, this.body, @JsonKey(name: 'started_at') this.startedAt, @JsonKey(name: 'ended_at') this.endedAt, this.order, @JsonKey(name: 'created_at') this.createdAt, @JsonKey(name: 'updated_at') this.updatedAt});
+  const _Sponsor({required this.id, required this.title, @JsonKey(name: 'website') required this.website, @JsonKey(name: 'logo_url') required this.logoUrl, this.description, required this.status, @JsonKey(name: 'contact_phone') this.contactPhone, @JsonKey(name: 'contact_email') this.contactEmail, @JsonKey(name: 'campaign_url') this.campaignUrl, this.body, @JsonKey(name: 'started_at', fromJson: _parseDateTimeNullable) this.startedAt, @JsonKey(name: 'ended_at', fromJson: _parseDateTimeNullable) this.endedAt, this.order, @JsonKey(name: 'created_at', fromJson: _parseDateTimeNullable) this.createdAt, @JsonKey(name: 'updated_at', fromJson: _parseDateTimeNullable) this.updatedAt});
   factory _Sponsor.fromJson(Map<String, dynamic> json) => _$SponsorFromJson(json);
 
 @override final  int id;
@@ -113,11 +113,11 @@ class _Sponsor implements Sponsor {
 @override@JsonKey(name: 'contact_email') final  String? contactEmail;
 @override@JsonKey(name: 'campaign_url') final  String? campaignUrl;
 @override final  String? body;
-@override@JsonKey(name: 'started_at') final  DateTime? startedAt;
-@override@JsonKey(name: 'ended_at') final  DateTime? endedAt;
+@override@JsonKey(name: 'started_at', fromJson: _parseDateTimeNullable) final  DateTime? startedAt;
+@override@JsonKey(name: 'ended_at', fromJson: _parseDateTimeNullable) final  DateTime? endedAt;
 @override final  int? order;
-@override@JsonKey(name: 'created_at') final  DateTime? createdAt;
-@override@JsonKey(name: 'updated_at') final  DateTime? updatedAt;
+@override@JsonKey(name: 'created_at', fromJson: _parseDateTimeNullable) final  DateTime? createdAt;
+@override@JsonKey(name: 'updated_at', fromJson: _parseDateTimeNullable) final  DateTime? updatedAt;
 
 /// Create a copy of Sponsor
 /// with the given fields replaced by the non-null parameter values.
@@ -152,7 +152,7 @@ abstract mixin class _$SponsorCopyWith<$Res> implements $SponsorCopyWith<$Res> {
   factory _$SponsorCopyWith(_Sponsor value, $Res Function(_Sponsor) _then) = __$SponsorCopyWithImpl;
 @override @useResult
 $Res call({
- int id, String title,@JsonKey(name: 'website') String website,@JsonKey(name: 'logo_url') String logoUrl, String? description, String status,@JsonKey(name: 'contact_phone') String? contactPhone,@JsonKey(name: 'contact_email') String? contactEmail,@JsonKey(name: 'campaign_url') String? campaignUrl, String? body,@JsonKey(name: 'started_at') DateTime? startedAt,@JsonKey(name: 'ended_at') DateTime? endedAt, int? order,@JsonKey(name: 'created_at') DateTime? createdAt,@JsonKey(name: 'updated_at') DateTime? updatedAt
+ int id, String title,@JsonKey(name: 'website') String website,@JsonKey(name: 'logo_url') String logoUrl, String? description, String status,@JsonKey(name: 'contact_phone') String? contactPhone,@JsonKey(name: 'contact_email') String? contactEmail,@JsonKey(name: 'campaign_url') String? campaignUrl, String? body,@JsonKey(name: 'started_at', fromJson: _parseDateTimeNullable) DateTime? startedAt,@JsonKey(name: 'ended_at', fromJson: _parseDateTimeNullable) DateTime? endedAt, int? order,@JsonKey(name: 'created_at', fromJson: _parseDateTimeNullable) DateTime? createdAt,@JsonKey(name: 'updated_at', fromJson: _parseDateTimeNullable) DateTime? updatedAt
 });
 
 

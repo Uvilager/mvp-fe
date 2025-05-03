@@ -1,12 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mvp_fe/core/providers/theme_provider.dart'; // Import theme provider
 import 'package:mvp_fe/core/routes/app_router.dart';
 import 'package:mvp_fe/core/theme/app_theme.dart'; // Import theme definitions
 
-void main() {
+Future<void> main() async {
   // Ensure widgets are initialized before loading theme preferences
   WidgetsFlutterBinding.ensureInitialized();
+  
+  // Load the .env file (with error handling)
+  try {
+    await dotenv.load(fileName: ".env");
+  } catch (e) {
+    // If .env file doesn't exist, continue with default values
+    print('Warning: .env file not found, using default values');
+  }
+  
   runApp(const ProviderScope(child: MyApp()));
 }
 
