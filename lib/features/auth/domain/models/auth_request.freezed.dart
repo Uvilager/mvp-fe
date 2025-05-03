@@ -152,7 +152,7 @@ as String,
 /// @nodoc
 mixin _$RegisterRequest {
 
-@JsonKey(name: 'first_name') String get firstName;@JsonKey(name: 'last_name') String get lastName; String get username; String get email; String get password;@JsonKey(name: 'password_confirmation') String get passwordConfirmation; String? get phone; String? get city; String? get address;@JsonKey(name: 'postal_code') String? get postalCode;@JsonKey(name: 'avatar_url') String? get avatarUrl;
+@JsonKey(name: 'first_name') String get firstName;@JsonKey(name: 'last_name') String get lastName; String get username; String get email; String get password;@JsonKey(name: 'password_confirmation') String get passwordConfirmation; String? get phone; String? get city; String? get address;@JsonKey(name: 'postal_code') String? get postalCode;@JsonKey(name: 'avatar_url') String? get avatarUrl;@JsonKey(name: 'district_id') int get districtId;
 /// Create a copy of RegisterRequest
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -165,16 +165,16 @@ $RegisterRequestCopyWith<RegisterRequest> get copyWith => _$RegisterRequestCopyW
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is RegisterRequest&&(identical(other.firstName, firstName) || other.firstName == firstName)&&(identical(other.lastName, lastName) || other.lastName == lastName)&&(identical(other.username, username) || other.username == username)&&(identical(other.email, email) || other.email == email)&&(identical(other.password, password) || other.password == password)&&(identical(other.passwordConfirmation, passwordConfirmation) || other.passwordConfirmation == passwordConfirmation)&&(identical(other.phone, phone) || other.phone == phone)&&(identical(other.city, city) || other.city == city)&&(identical(other.address, address) || other.address == address)&&(identical(other.postalCode, postalCode) || other.postalCode == postalCode)&&(identical(other.avatarUrl, avatarUrl) || other.avatarUrl == avatarUrl));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is RegisterRequest&&(identical(other.firstName, firstName) || other.firstName == firstName)&&(identical(other.lastName, lastName) || other.lastName == lastName)&&(identical(other.username, username) || other.username == username)&&(identical(other.email, email) || other.email == email)&&(identical(other.password, password) || other.password == password)&&(identical(other.passwordConfirmation, passwordConfirmation) || other.passwordConfirmation == passwordConfirmation)&&(identical(other.phone, phone) || other.phone == phone)&&(identical(other.city, city) || other.city == city)&&(identical(other.address, address) || other.address == address)&&(identical(other.postalCode, postalCode) || other.postalCode == postalCode)&&(identical(other.avatarUrl, avatarUrl) || other.avatarUrl == avatarUrl)&&(identical(other.districtId, districtId) || other.districtId == districtId));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,firstName,lastName,username,email,password,passwordConfirmation,phone,city,address,postalCode,avatarUrl);
+int get hashCode => Object.hash(runtimeType,firstName,lastName,username,email,password,passwordConfirmation,phone,city,address,postalCode,avatarUrl,districtId);
 
 @override
 String toString() {
-  return 'RegisterRequest(firstName: $firstName, lastName: $lastName, username: $username, email: $email, password: $password, passwordConfirmation: $passwordConfirmation, phone: $phone, city: $city, address: $address, postalCode: $postalCode, avatarUrl: $avatarUrl)';
+  return 'RegisterRequest(firstName: $firstName, lastName: $lastName, username: $username, email: $email, password: $password, passwordConfirmation: $passwordConfirmation, phone: $phone, city: $city, address: $address, postalCode: $postalCode, avatarUrl: $avatarUrl, districtId: $districtId)';
 }
 
 
@@ -185,7 +185,7 @@ abstract mixin class $RegisterRequestCopyWith<$Res>  {
   factory $RegisterRequestCopyWith(RegisterRequest value, $Res Function(RegisterRequest) _then) = _$RegisterRequestCopyWithImpl;
 @useResult
 $Res call({
-@JsonKey(name: 'first_name') String firstName,@JsonKey(name: 'last_name') String lastName, String username, String email, String password,@JsonKey(name: 'password_confirmation') String passwordConfirmation, String? phone, String? city, String? address,@JsonKey(name: 'postal_code') String? postalCode,@JsonKey(name: 'avatar_url') String? avatarUrl
+@JsonKey(name: 'first_name') String firstName,@JsonKey(name: 'last_name') String lastName, String username, String email, String password,@JsonKey(name: 'password_confirmation') String passwordConfirmation, String? phone, String? city, String? address,@JsonKey(name: 'postal_code') String? postalCode,@JsonKey(name: 'avatar_url') String? avatarUrl,@JsonKey(name: 'district_id') int districtId
 });
 
 
@@ -202,7 +202,7 @@ class _$RegisterRequestCopyWithImpl<$Res>
 
 /// Create a copy of RegisterRequest
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? firstName = null,Object? lastName = null,Object? username = null,Object? email = null,Object? password = null,Object? passwordConfirmation = null,Object? phone = freezed,Object? city = freezed,Object? address = freezed,Object? postalCode = freezed,Object? avatarUrl = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? firstName = null,Object? lastName = null,Object? username = null,Object? email = null,Object? password = null,Object? passwordConfirmation = null,Object? phone = freezed,Object? city = freezed,Object? address = freezed,Object? postalCode = freezed,Object? avatarUrl = freezed,Object? districtId = null,}) {
   return _then(_self.copyWith(
 firstName: null == firstName ? _self.firstName : firstName // ignore: cast_nullable_to_non_nullable
 as String,lastName: null == lastName ? _self.lastName : lastName // ignore: cast_nullable_to_non_nullable
@@ -215,7 +215,8 @@ as String?,city: freezed == city ? _self.city : city // ignore: cast_nullable_to
 as String?,address: freezed == address ? _self.address : address // ignore: cast_nullable_to_non_nullable
 as String?,postalCode: freezed == postalCode ? _self.postalCode : postalCode // ignore: cast_nullable_to_non_nullable
 as String?,avatarUrl: freezed == avatarUrl ? _self.avatarUrl : avatarUrl // ignore: cast_nullable_to_non_nullable
-as String?,
+as String?,districtId: null == districtId ? _self.districtId : districtId // ignore: cast_nullable_to_non_nullable
+as int,
   ));
 }
 
@@ -226,7 +227,7 @@ as String?,
 @JsonSerializable()
 
 class _RegisterRequest implements RegisterRequest {
-  const _RegisterRequest({@JsonKey(name: 'first_name') required this.firstName, @JsonKey(name: 'last_name') required this.lastName, required this.username, required this.email, required this.password, @JsonKey(name: 'password_confirmation') required this.passwordConfirmation, this.phone, this.city, this.address, @JsonKey(name: 'postal_code') this.postalCode, @JsonKey(name: 'avatar_url') this.avatarUrl});
+  const _RegisterRequest({@JsonKey(name: 'first_name') required this.firstName, @JsonKey(name: 'last_name') required this.lastName, required this.username, required this.email, required this.password, @JsonKey(name: 'password_confirmation') required this.passwordConfirmation, this.phone, this.city, this.address, @JsonKey(name: 'postal_code') this.postalCode, @JsonKey(name: 'avatar_url') this.avatarUrl, @JsonKey(name: 'district_id') required this.districtId});
   factory _RegisterRequest.fromJson(Map<String, dynamic> json) => _$RegisterRequestFromJson(json);
 
 @override@JsonKey(name: 'first_name') final  String firstName;
@@ -240,6 +241,7 @@ class _RegisterRequest implements RegisterRequest {
 @override final  String? address;
 @override@JsonKey(name: 'postal_code') final  String? postalCode;
 @override@JsonKey(name: 'avatar_url') final  String? avatarUrl;
+@override@JsonKey(name: 'district_id') final  int districtId;
 
 /// Create a copy of RegisterRequest
 /// with the given fields replaced by the non-null parameter values.
@@ -254,16 +256,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _RegisterRequest&&(identical(other.firstName, firstName) || other.firstName == firstName)&&(identical(other.lastName, lastName) || other.lastName == lastName)&&(identical(other.username, username) || other.username == username)&&(identical(other.email, email) || other.email == email)&&(identical(other.password, password) || other.password == password)&&(identical(other.passwordConfirmation, passwordConfirmation) || other.passwordConfirmation == passwordConfirmation)&&(identical(other.phone, phone) || other.phone == phone)&&(identical(other.city, city) || other.city == city)&&(identical(other.address, address) || other.address == address)&&(identical(other.postalCode, postalCode) || other.postalCode == postalCode)&&(identical(other.avatarUrl, avatarUrl) || other.avatarUrl == avatarUrl));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _RegisterRequest&&(identical(other.firstName, firstName) || other.firstName == firstName)&&(identical(other.lastName, lastName) || other.lastName == lastName)&&(identical(other.username, username) || other.username == username)&&(identical(other.email, email) || other.email == email)&&(identical(other.password, password) || other.password == password)&&(identical(other.passwordConfirmation, passwordConfirmation) || other.passwordConfirmation == passwordConfirmation)&&(identical(other.phone, phone) || other.phone == phone)&&(identical(other.city, city) || other.city == city)&&(identical(other.address, address) || other.address == address)&&(identical(other.postalCode, postalCode) || other.postalCode == postalCode)&&(identical(other.avatarUrl, avatarUrl) || other.avatarUrl == avatarUrl)&&(identical(other.districtId, districtId) || other.districtId == districtId));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,firstName,lastName,username,email,password,passwordConfirmation,phone,city,address,postalCode,avatarUrl);
+int get hashCode => Object.hash(runtimeType,firstName,lastName,username,email,password,passwordConfirmation,phone,city,address,postalCode,avatarUrl,districtId);
 
 @override
 String toString() {
-  return 'RegisterRequest(firstName: $firstName, lastName: $lastName, username: $username, email: $email, password: $password, passwordConfirmation: $passwordConfirmation, phone: $phone, city: $city, address: $address, postalCode: $postalCode, avatarUrl: $avatarUrl)';
+  return 'RegisterRequest(firstName: $firstName, lastName: $lastName, username: $username, email: $email, password: $password, passwordConfirmation: $passwordConfirmation, phone: $phone, city: $city, address: $address, postalCode: $postalCode, avatarUrl: $avatarUrl, districtId: $districtId)';
 }
 
 
@@ -274,7 +276,7 @@ abstract mixin class _$RegisterRequestCopyWith<$Res> implements $RegisterRequest
   factory _$RegisterRequestCopyWith(_RegisterRequest value, $Res Function(_RegisterRequest) _then) = __$RegisterRequestCopyWithImpl;
 @override @useResult
 $Res call({
-@JsonKey(name: 'first_name') String firstName,@JsonKey(name: 'last_name') String lastName, String username, String email, String password,@JsonKey(name: 'password_confirmation') String passwordConfirmation, String? phone, String? city, String? address,@JsonKey(name: 'postal_code') String? postalCode,@JsonKey(name: 'avatar_url') String? avatarUrl
+@JsonKey(name: 'first_name') String firstName,@JsonKey(name: 'last_name') String lastName, String username, String email, String password,@JsonKey(name: 'password_confirmation') String passwordConfirmation, String? phone, String? city, String? address,@JsonKey(name: 'postal_code') String? postalCode,@JsonKey(name: 'avatar_url') String? avatarUrl,@JsonKey(name: 'district_id') int districtId
 });
 
 
@@ -291,7 +293,7 @@ class __$RegisterRequestCopyWithImpl<$Res>
 
 /// Create a copy of RegisterRequest
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? firstName = null,Object? lastName = null,Object? username = null,Object? email = null,Object? password = null,Object? passwordConfirmation = null,Object? phone = freezed,Object? city = freezed,Object? address = freezed,Object? postalCode = freezed,Object? avatarUrl = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? firstName = null,Object? lastName = null,Object? username = null,Object? email = null,Object? password = null,Object? passwordConfirmation = null,Object? phone = freezed,Object? city = freezed,Object? address = freezed,Object? postalCode = freezed,Object? avatarUrl = freezed,Object? districtId = null,}) {
   return _then(_RegisterRequest(
 firstName: null == firstName ? _self.firstName : firstName // ignore: cast_nullable_to_non_nullable
 as String,lastName: null == lastName ? _self.lastName : lastName // ignore: cast_nullable_to_non_nullable
@@ -304,7 +306,8 @@ as String?,city: freezed == city ? _self.city : city // ignore: cast_nullable_to
 as String?,address: freezed == address ? _self.address : address // ignore: cast_nullable_to_non_nullable
 as String?,postalCode: freezed == postalCode ? _self.postalCode : postalCode // ignore: cast_nullable_to_non_nullable
 as String?,avatarUrl: freezed == avatarUrl ? _self.avatarUrl : avatarUrl // ignore: cast_nullable_to_non_nullable
-as String?,
+as String?,districtId: null == districtId ? _self.districtId : districtId // ignore: cast_nullable_to_non_nullable
+as int,
   ));
 }
 

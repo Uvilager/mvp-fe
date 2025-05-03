@@ -28,6 +28,7 @@ _RegisterRequest _$RegisterRequestFromJson(Map<String, dynamic> json) =>
       address: json['address'] as String?,
       postalCode: json['postal_code'] as String?,
       avatarUrl: json['avatar_url'] as String?,
+      districtId: (json['district_id'] as num).toInt(),
     );
 
 Map<String, dynamic> _$RegisterRequestToJson(_RegisterRequest instance) =>
@@ -43,4 +44,5 @@ Map<String, dynamic> _$RegisterRequestToJson(_RegisterRequest instance) =>
       'address': instance.address,
       'postal_code': instance.postalCode,
       'avatar_url': instance.avatarUrl,
+      'district_id': instance.districtId,
     };

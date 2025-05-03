@@ -10,6 +10,7 @@ import '../../features/auth/presentation/screens/register/register_screen.dart';
 import '../../features/fundraisers/presentation/screens/fundraiser_show_screen.dart';
 import '../../features/fundraisers/presentation/screens/fundraisers_screen.dart';
 import '../../features/leaderboard/presentation/screens/leaderboard_screen.dart';
+import '../../features/projects/presentation/screens/project_detail_screen.dart'; // Added import for project detail
 import '../../features/projects/presentation/screens/projects_screen.dart';
 import '../../features/home/presentation/screens/home_screen.dart';
 import '../../features/settings/presentation/screens/general_settings_screen.dart'; // Added import
@@ -95,10 +96,25 @@ GoRouter router(RouterRef ref) {
                 (context, state) => const NoTransitionPage(
                   child: ProjectsScreen(), // Use NoTransitionPage for tabs
                 ),
-            // TODO: Add nested project detail routes here if needed
-            // routes: [
-            //   GoRoute(path: ':id', builder: ...),
-            // ]
+            routes: [
+              // Nested Project detail route *within* the shell
+              GoRoute(
+                path: ':id', // e.g., /projects/456
+                // No parentNavigatorKey needed, defaults to shell's navigator
+                builder: (context, state) {
+                  final idString = state.pathParameters['id'];
+                  final id = int.tryParse(idString ?? '');
+                  if (id == null) {
+                    // TODO: Improve error handling
+                    return const Scaffold(
+                      body: Center(child: Text('Invalid Project ID')),
+                    );
+                  }
+                  // This screen will be pushed *onto* the shell navigator stack
+                  return ProjectDetailScreen(projectId: id);
+                },
+              ),
+            ],
           ),
           GoRoute(
             path: '/home',

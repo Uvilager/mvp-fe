@@ -10,7 +10,8 @@ abstract class LoginRequest with _$LoginRequest {
     required String password,
   }) = _LoginRequest;
 
-  factory LoginRequest.fromJson(Map<String, dynamic> json) => _$LoginRequestFromJson(json);
+  factory LoginRequest.fromJson(Map<String, dynamic> json) =>
+      _$LoginRequestFromJson(json);
 }
 
 @freezed
@@ -21,13 +22,16 @@ abstract class RegisterRequest with _$RegisterRequest {
     required String username,
     required String email,
     required String password,
-    @JsonKey(name: 'password_confirmation') required String passwordConfirmation,
+    @JsonKey(name: 'password_confirmation')
+    required String passwordConfirmation,
     String? phone,
     String? city,
     String? address,
     @JsonKey(name: 'postal_code') String? postalCode,
     @JsonKey(name: 'avatar_url') String? avatarUrl,
+    @JsonKey(name: 'district_id') required int districtId,
   }) = _RegisterRequest;
 
-  factory RegisterRequest.fromJson(Map<String, dynamic> json) => _$RegisterRequestFromJson(json);
-} 
+  factory RegisterRequest.fromJson(Map<String, dynamic> json) =>
+      _$RegisterRequestFromJson(json);
+}

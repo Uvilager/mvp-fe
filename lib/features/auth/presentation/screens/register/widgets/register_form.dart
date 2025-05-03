@@ -5,7 +5,6 @@ import 'package:mvp_fe/core/widgets/forms/custom_text_field.dart';
 import 'package:mvp_fe/core/widgets/forms/password_field.dart';
 import 'package:mvp_fe/features/auth/presentation/providers/auth_provider.dart';
 
-
 class RegisterForm extends ConsumerStatefulWidget {
   const RegisterForm({super.key});
 
@@ -26,6 +25,7 @@ class _RegisterFormState extends ConsumerState<RegisterForm> {
   final _addressController = TextEditingController();
   final _postalCodeController = TextEditingController();
   final _avatarUrlController = TextEditingController();
+  final _districtIdController = TextEditingController(); // Added controller
   bool _isLoading = false;
 
   @override
@@ -41,6 +41,7 @@ class _RegisterFormState extends ConsumerState<RegisterForm> {
     _addressController.dispose();
     _postalCodeController.dispose();
     _avatarUrlController.dispose();
+    _districtIdController.dispose(); // Dispose controller
     super.dispose();
   }
 
@@ -50,19 +51,24 @@ class _RegisterFormState extends ConsumerState<RegisterForm> {
     setState(() => _isLoading = true);
 
     try {
-      await ref.read(authProvider.notifier).register(
-        firstName: _firstNameController.text.trim(),
-        lastName: _lastNameController.text.trim(),
-        username: _usernameController.text.trim(),
-        phone: _phoneController.text.trim(),
-        email: _emailController.text.trim(),
-        password: _passwordController.text,
-        passwordConfirmation: _confirmPasswordController.text,
-        city: _cityController.text.trim(),
-        address: _addressController.text.trim(),
-        postalCode: _postalCodeController.text.trim(),
-        avatarUrl: _avatarUrlController.text.trim(),
-      );
+      await ref
+          .read(authProvider.notifier)
+          .register(
+            firstName: _firstNameController.text.trim(),
+            lastName: _lastNameController.text.trim(),
+            username: _usernameController.text.trim(),
+            phone: _phoneController.text.trim(),
+            email: _emailController.text.trim(),
+            password: _passwordController.text,
+            passwordConfirmation: _confirmPasswordController.text,
+            city: _cityController.text.trim(),
+            address: _addressController.text.trim(),
+            postalCode: _postalCodeController.text.trim(),
+            avatarUrl: _avatarUrlController.text.trim(),
+            districtId: int.parse(
+              _districtIdController.text.trim(),
+            ), // Pass districtId
+          );
     } finally {
       if (mounted) {
         setState(() => _isLoading = false);
@@ -235,6 +241,22 @@ class _RegisterFormState extends ConsumerState<RegisterForm> {
             label: 'Avatar URL (Optional)',
             keyboardType: TextInputType.url,
           ),
+          const SizedBox(height: 16), // Adjusted spacing
+          // District ID Field (Added)
+          CustomTextField(
+            controller: _districtIdController,
+            label: 'District ID',
+            keyboardType: TextInputType.number,
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'Please enter the District ID';
+              }
+              if (int.tryParse(value) == null) {
+                return 'Please enter a valid number';
+              }
+              return null;
+            },
+          ),
           const SizedBox(height: 24),
 
           // Register Button
@@ -247,4 +269,4 @@ class _RegisterFormState extends ConsumerState<RegisterForm> {
       ),
     );
   }
-} 
+}

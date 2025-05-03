@@ -13,20 +13,20 @@ class Auth extends _$Auth {
   @override
   Future<AuthState> build() async {
     final repository = ref.watch(authRepositoryProvider);
-    
+
     // Check if user is already authenticated
     final user = await repository.getCurrentUser();
     if (user != null) {
       return AuthState.authenticated(user);
     }
-    
+
     return const AuthState.unauthenticated();
   }
 
   Future<void> login(String email, String password) async {
     log('login auth_provider');
     state = const AsyncValue.loading();
-    
+
     state = await AsyncValue.guard(() async {
       final repository = ref.read(authRepositoryProvider);
       final user = await repository.login(
@@ -48,9 +48,10 @@ class Auth extends _$Auth {
     String? address,
     String? postalCode,
     String? avatarUrl,
+    required int districtId,
   }) async {
     state = const AsyncValue.loading();
-    
+
     state = await AsyncValue.guard(() async {
       final repository = ref.read(authRepositoryProvider);
       final user = await repository.register(
@@ -66,6 +67,7 @@ class Auth extends _$Auth {
           address: address,
           postalCode: postalCode,
           avatarUrl: avatarUrl,
+          districtId: districtId,
         ),
       );
       return AuthState.authenticated(user);
@@ -74,11 +76,11 @@ class Auth extends _$Auth {
 
   Future<void> logout() async {
     state = const AsyncValue.loading();
-    
+
     state = await AsyncValue.guard(() async {
       final repository = ref.read(authRepositoryProvider);
       await repository.logout();
       return const AuthState.unauthenticated();
     });
   }
-} 
+}

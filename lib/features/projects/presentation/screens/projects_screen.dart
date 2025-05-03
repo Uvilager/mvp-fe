@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart'; // Import GoRouter
 import 'package:mvp_fe/features/projects/domain/models/project.dart';
 
 import '../../../../core/widgets/network_image_with_placeholder.dart';
@@ -75,15 +76,9 @@ class ProjectCard extends StatelessWidget {
       clipBehavior: Clip.antiAlias,
       child: InkWell(
         onTap:
-            () => Navigator.push(
+            () => GoRouter.of(
               context,
-              MaterialPageRoute(
-                builder:
-                    (context) => ProjectDetailScreen(
-                      projectId: project.id,
-                    ), // Pass projectId instead of project
-              ),
-            ),
+            ).push('/projects/${project.id}'), // Use GoRouter push
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
