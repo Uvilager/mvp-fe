@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../domain/models/project.dart';
 import '../providers/project_provider.dart';
+import '../../../home/presentation/providers/dashboard_provider.dart';
 
 class ProjectDetailScreen extends ConsumerWidget {
   final int projectId;
@@ -324,7 +325,7 @@ class ProjectDetailScreen extends ConsumerWidget {
                         child: Column(
                           children: [
                             // Action Buttons Card - Show at top if user is involved
-                            if (project.isUserVolunteer == true) ...[
+                            if (project.isUserVolunteer == true || project.isUserLeader == true) ...[
                               _buildActionButtonsCard(context, ref, project, primaryColor, secondaryColor, whiteColor),
                               const SizedBox(height: 16),
                             ],
@@ -624,7 +625,7 @@ class ProjectDetailScreen extends ConsumerWidget {
                       const SizedBox(height: 16),
 
                       // Action Buttons Card - Show at bottom if user is NOT involved
-                      if (project.isUserVolunteer != true) ...[
+                      if (project.isUserVolunteer != true && project.isUserLeader != true) ...[
                         _buildActionButtonsCard(context, ref, project, primaryColor, secondaryColor, whiteColor),
                         const SizedBox(height: 16),
                       ],
@@ -815,6 +816,14 @@ class ProjectDetailScreen extends ConsumerWidget {
   Future<void> _handleVolunteer(BuildContext context, WidgetRef ref, int projectId) async {
     try {
       final message = await ref.read(projectsProvider.notifier).volunteer(projectId);
+      
+      // Force refresh the project detail to show updated UI
+      ref.invalidate(projectDetailProvider(projectId));
+      // Also refresh the main projects list in case it shows participation status
+      ref.invalidate(projectsProvider);
+      // Refresh dashboard data to update "My Projects" screen
+      ref.invalidate(dashboardDataProvider);
+      
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
@@ -835,6 +844,14 @@ class ProjectDetailScreen extends ConsumerWidget {
   Future<void> _handleBecomeLeader(BuildContext context, WidgetRef ref, int projectId) async {
     try {
       final message = await ref.read(projectsProvider.notifier).becomeLeader(projectId);
+      
+      // Force refresh the project detail to show updated UI
+      ref.invalidate(projectDetailProvider(projectId));
+      // Also refresh the main projects list in case it shows participation status
+      ref.invalidate(projectsProvider);
+      // Refresh dashboard data to update "My Projects" screen
+      ref.invalidate(dashboardDataProvider);
+      
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
@@ -939,7 +956,7 @@ class ProjectDetailScreen extends ConsumerWidget {
           const SizedBox(height: 20),
           
           // Check if user is already part of project
-          if (project.isUserVolunteer == true) ...[
+          if (project.isUserVolunteer == true || project.isUserLeader == true) ...[
             // User is already a volunteer/leader
             Container(
               padding: const EdgeInsets.all(16),

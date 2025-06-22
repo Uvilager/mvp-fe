@@ -22,6 +22,11 @@ import '../../features/settings/presentation/screens/settings_profile_screen.dar
 import '../../features/settings/presentation/screens/settings_password_screen.dart';
 import '../../features/sponsors/presentation/screens/sponsors_screen.dart';
 import '../../features/sponsors/presentation/screens/sponsor_show_screen.dart';
+import '../../features/news/presentation/screens/news_detail_screen.dart';
+import '../../features/news/presentation/screens/news_screen.dart';
+import '../../features/projects/presentation/screens/project_request_screen.dart';
+import '../../features/projects/presentation/screens/project_requests_screen.dart';
+import '../../features/projects/presentation/screens/project_request_detail_screen.dart';
 import '../screens/main_screen.dart';
 
 part 'app_router.g.dart';
@@ -114,6 +119,56 @@ GoRouter router(RouterRef ref) {
           }
           return VolunteerProjectScreen(projectId: id);
         },
+      ),
+      GoRoute(
+        // News list screen, outside the shell
+        parentNavigatorKey: _rootNavigatorKey,
+        path: '/news',
+        builder: (context, state) => const NewsScreen(),
+        routes: [
+          GoRoute(
+            // News detail screen
+            path: ':id',
+            builder: (context, state) {
+              final idString = state.pathParameters['id'];
+              final id = int.tryParse(idString ?? '');
+              if (id == null) {
+                return const Scaffold(
+                  body: Center(child: Text('Invalid News ID')),
+                );
+              }
+              return NewsDetailScreen(newsId: id);
+            },
+          ),
+        ],
+      ),
+      GoRoute(
+        // Project Request screen, outside the shell
+        parentNavigatorKey: _rootNavigatorKey,
+        path: '/project-request',
+        builder: (context, state) => const ProjectRequestScreen(),
+      ),
+      GoRoute(
+        // Project requests list screen, outside the shell
+        parentNavigatorKey: _rootNavigatorKey,
+        path: '/project-requests',
+        builder: (context, state) => const ProjectRequestsScreen(),
+        routes: [
+          GoRoute(
+            // Project request detail screen
+            path: ':id',
+            builder: (context, state) {
+              final idString = state.pathParameters['id'];
+              final id = int.tryParse(idString ?? '');
+              if (id == null) {
+                return const Scaffold(
+                  body: Center(child: Text('Invalid Project Request ID')),
+                );
+              }
+              return ProjectRequestDetailScreen(requestId: id);
+            },
+          ),
+        ],
       ),
 
       // ShellRoute for main navigation with BottomNavigationBar

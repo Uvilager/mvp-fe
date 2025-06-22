@@ -33,6 +33,7 @@ sealed class Project with _$Project {
     String? district,
     @JsonKey(name: 'has_user_voted') bool? hasUserVoted,
     @JsonKey(name: 'is_user_volunteer') bool? isUserVolunteer,
+    @JsonKey(name: 'is_user_leader') bool? isUserLeader,
     @JsonKey(name: 'volunteers_count') int? volunteersCount,
     @JsonKey(name: 'leaders_count') int? leadersCount,
   }) = _Project;
@@ -50,6 +51,7 @@ DateTime _parseDateTime(dynamic value) {
   // If the string doesn't contain 'T' or 'Z', it's probably in Laravel's default format
   if (!dateString.contains('T') && !dateString.contains('Z')) {
     // Laravel default format: "2025-06-15 20:23:24"
+    
     // Add 'T' to make it ISO 8601 compliant and assume UTC
     if (dateString.contains(' ')) {
       dateString = dateString.replaceFirst(' ', 'T') + 'Z';

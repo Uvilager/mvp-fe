@@ -44,6 +44,11 @@ dependencies:
   json_annotation: ^4.9.0
   shared_preferences: ^2.2.3 # Added for theme persistence
   flutter_dotenv: ^5.2.1
+  url_launcher: ^6.3.0 # Added for social media links
+  file_picker: ^8.0.0+1 # For file selection
+  image_picker: ^1.0.7 # For camera/gallery access
+  http: ^1.2.0 # For multipart uploads
+  mime: ^1.0.4 # For MIME type detection
 
 dev_dependencies:
   flutter_test:

@@ -305,75 +305,63 @@ class _SettingsProfileScreenState extends ConsumerState<SettingsProfileScreen> {
               ),
               const SizedBox(height: 24),
               
-              // First Name and Last Name Row
-              Row(
-                children: [
-                  Expanded(
-                    child: _buildTextFormField(
-                      controller: _firstNameController,
-                      label: 'Ime',
-                      icon: Icons.person_outline,
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Ime je obavezno';
-                        }
-                        return null;
-                      },
-                    ),
-                  ),
-                  const SizedBox(width: 16),
-                  Expanded(
-                    child: _buildTextFormField(
-                      controller: _lastNameController,
-                      label: 'Prezime',
-                      icon: Icons.person_outline,
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Prezime je obavezno';
-                        }
-                        return null;
-                      },
-                    ),
-                  ),
-                ],
+              // First Name - Full Width
+              _buildTextFormField(
+                controller: _firstNameController,
+                label: 'Ime',
+                icon: Icons.person_outline,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Ime je obavezno';
+                  }
+                  return null;
+                },
               ),
               const SizedBox(height: 16),
               
-              // Username and Email Row
-              Row(
-                children: [
-                  Expanded(
-                    child: _buildTextFormField(
-                      controller: _usernameController,
-                      label: 'Korisničko ime',
-                      icon: Icons.alternate_email,
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Korisničko ime je obavezno';
-                        }
-                        return null;
-                      },
-                    ),
-                  ),
-                  const SizedBox(width: 16),
-                  Expanded(
-                    child: _buildTextFormField(
-                      controller: _emailController,
-                      label: 'Email',
-                      icon: Icons.email_outlined,
-                      keyboardType: TextInputType.emailAddress,
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Email je obavezan';
-                        }
-                        if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(value)) {
-                          return 'Unesite validan email';
-                        }
-                        return null;
-                      },
-                    ),
-                  ),
-                ],
+              // Last Name - Full Width
+              _buildTextFormField(
+                controller: _lastNameController,
+                label: 'Prezime',
+                icon: Icons.person_outline,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Prezime je obavezno';
+                  }
+                  return null;
+                },
+              ),
+              const SizedBox(height: 16),
+              
+              // Username - Full Width
+              _buildTextFormField(
+                controller: _usernameController,
+                label: 'Korisničko ime',
+                icon: Icons.alternate_email,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Korisničko ime je obavezno';
+                  }
+                  return null;
+                },
+              ),
+              const SizedBox(height: 16),
+              
+              // Email - Full Width
+              _buildTextFormField(
+                controller: _emailController,
+                label: 'Email',
+                icon: Icons.email_outlined,
+                keyboardType: TextInputType.emailAddress,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Email je obavezan';
+                  }
+                  if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(value)) {
+                    return 'Unesite validan email';
+                  }
+                  return null;
+                },
               ),
               const SizedBox(height: 16),
               

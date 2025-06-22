@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mvp_fe/features/auth/presentation/providers/auth_provider.dart';
 import 'package:mvp_fe/features/auth/domain/models/auth_state.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class SettingsScreen extends ConsumerWidget {
   const SettingsScreen({super.key});
@@ -198,6 +199,17 @@ class SettingsScreen extends ConsumerWidget {
                   padding: const EdgeInsets.all(16.0),
                   sliver: SliverList(
                     delegate: SliverChildListDelegate([
+                      // Project Requests Card
+                      _buildMenuCard(
+                        context,
+                        title: 'Moji zahtevi',
+                        subtitle: 'Pogledajte svoje predloge za projekte',
+                        icon: Icons.assignment_outlined,
+                        color: Colors.teal[600]!,
+                        onTap: () => context.push('/project-requests'),
+                      ),
+                      const SizedBox(height: 16),
+
                       // Leaderboard Card
                       _buildMenuCard(
                         context,
@@ -206,6 +218,28 @@ class SettingsScreen extends ConsumerWidget {
                         icon: Icons.leaderboard_outlined,
                         color: Colors.amber[600]!,
                         onTap: () => context.push('/settings/leaderboard'),
+                      ),
+                      const SizedBox(height: 16),
+
+                      // News Card
+                      _buildMenuCard(
+                        context,
+                        title: 'Vesti',
+                        subtitle: 'Pogledajte najnovije vesti i obaveštenja',
+                        icon: Icons.newspaper_outlined,
+                        color: Colors.indigo[600]!,
+                        onTap: () => context.push('/news'),
+                      ),
+                      const SizedBox(height: 16),
+                      
+                      // Sponsors Card
+                      _buildMenuCard(
+                        context,
+                        title: 'Sponzori',
+                        subtitle: 'Pogledajte naše partnere i sponzore',
+                        icon: Icons.handshake_outlined,
+                        color: Colors.green[600]!,
+                        onTap: () => context.push('/sponsors'),
                       ),
                       const SizedBox(height: 16),
                       
@@ -229,6 +263,10 @@ class SettingsScreen extends ConsumerWidget {
                         color: Colors.blue[600]!,
                         onTap: () => context.push('/settings/password'),
                       ),
+                      const SizedBox(height: 24),
+                      
+                      // Social Media Section
+                      _buildSocialMediaSection(context),
                       const SizedBox(height: 24),
                     ]),
                   ),
@@ -351,6 +389,135 @@ class SettingsScreen extends ConsumerWidget {
             ],
           ),
         ),
+      ),
+    );
+  }
+
+
+
+  Widget _buildSocialMediaSection(BuildContext context) {
+    const Color secondaryColor = Color(0xFF2c3e50);
+    const Color whiteColor = Colors.white;
+    
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        // Section Title
+        const Padding(
+          padding: EdgeInsets.symmetric(horizontal: 4),
+          child: Text(
+            'Pratite nas',
+            style: TextStyle(
+              fontSize: 22,
+              fontWeight: FontWeight.bold,
+              color: secondaryColor,
+            ),
+          ),
+        ),
+        const SizedBox(height: 16),
+        
+        // Social Media Icons
+        Container(
+          decoration: BoxDecoration(
+            color: whiteColor,
+            borderRadius: BorderRadius.circular(16),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.08),
+                spreadRadius: 0,
+                blurRadius: 20,
+                offset: const Offset(0, 4),
+              ),
+            ],
+          ),
+          padding: const EdgeInsets.all(24),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              _buildSocialIcon(
+                context,
+                icon: Icons.facebook,
+                color: const Color(0xFF1877F2),
+                label: 'Facebook',
+                url: '', // Will be provided later
+              ),
+              _buildSocialIcon(
+                context,
+                icon: Icons.camera_alt,
+                color: const Color(0xFFE4405F),
+                label: 'Instagram',
+                url: '', // Will be provided later
+              ),
+              _buildSocialIcon(
+                context,
+                icon: Icons.alternate_email,
+                color: const Color(0xFF1DA1F2),
+                label: 'Twitter',
+                url: '', // Will be provided later
+              ),
+              _buildSocialIcon(
+                context,
+                icon: Icons.video_library,
+                color: const Color(0xFFFF0000),
+                label: 'YouTube',
+                url: '', // Will be provided later
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildSocialIcon(
+    BuildContext context, {
+    required IconData icon,
+    required Color color,
+    required String label,
+    required String url,
+  }) {
+    return GestureDetector(
+      onTap: () async {
+        if (url.isNotEmpty) {
+          final Uri uri = Uri.parse(url);
+          if (await canLaunchUrl(uri)) {
+            await launchUrl(uri);
+          }
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('$label link će uskoro biti dostupan!'),
+              backgroundColor: color,
+            ),
+          );
+        }
+      },
+      child: Column(
+        children: [
+          Container(
+            width: 60,
+            height: 60,
+            decoration: BoxDecoration(
+              color: color.withOpacity(0.1),
+              borderRadius: BorderRadius.circular(30),
+              border: Border.all(color: color.withOpacity(0.3)),
+            ),
+            child: Icon(
+              icon,
+              color: color,
+              size: 28,
+            ),
+          ),
+          const SizedBox(height: 8),
+          Text(
+            label,
+            style: TextStyle(
+              fontSize: 12,
+              fontWeight: FontWeight.w600,
+              color: Colors.grey[700],
+            ),
+          ),
+        ],
       ),
     );
   }

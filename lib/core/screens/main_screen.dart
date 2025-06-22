@@ -27,15 +27,12 @@ class MainScreen extends ConsumerWidget {
       return 1;
     }
     if (location.startsWith('/home')) {
-      return 2;
-    }
-    if (location.startsWith('/sponsors')) {
-      return 3;
+      return 3; // Home moved to index 3
     }
     if (location.startsWith('/settings')) {
       return 4;
     }
-    return 2;
+    return 3; // Default to home
   }
 
   // Helper method to navigate to the correct route based on index
@@ -48,10 +45,11 @@ class MainScreen extends ConsumerWidget {
         GoRouter.of(context).go('/fundraisers');
         break;
       case 2:
-        GoRouter.of(context).go('/home');
+        // Add project - navigate to project request form
+        GoRouter.of(context).push('/project-request');
         break;
       case 3:
-        GoRouter.of(context).go('/sponsors');
+        GoRouter.of(context).go('/home');
         break;
       case 4:
         GoRouter.of(context).go('/settings');
@@ -125,13 +123,11 @@ class CustomBottomNavBar extends StatelessWidget {
                 index: 1,
                 isSelected: selectedIndex == 1,
               ),
-              // Larger Home Button
-              _buildHomeButton(
-                isSelected: selectedIndex == 2,
-              ),
+              // Large Add Project Button
+              _buildAddProjectButton(),
               _buildNavItem(
-                icon: Icons.handshake_outlined,
-                activeIcon: Icons.handshake,
+                icon: Icons.home_outlined,
+                activeIcon: Icons.home,
                 index: 3,
                 isSelected: selectedIndex == 3,
               ),
@@ -169,9 +165,7 @@ class CustomBottomNavBar extends StatelessWidget {
     );
   }
 
-  Widget _buildHomeButton({
-    required bool isSelected,
-  }) {
+  Widget _buildAddProjectButton() {
     const Color primaryColor = Color(0xFFf08a6e);
     const Color whiteColor = Colors.white;
     
@@ -196,10 +190,10 @@ class CustomBottomNavBar extends StatelessWidget {
             ),
           ],
         ),
-        child: Icon(
-          isSelected ? Icons.home : Icons.home_outlined,
+        child: const Icon(
+          Icons.add,
           color: primaryColor,
-          size: 30,
+          size: 32,
         ),
       ),
     );

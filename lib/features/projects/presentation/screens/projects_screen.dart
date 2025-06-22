@@ -66,6 +66,11 @@ class ProjectsScreen extends ConsumerWidget {
         ),
         actions: [
           IconButton(
+            icon: const Icon(Icons.person_outline, color: whiteColor),
+            tooltip: 'Moji projekti',
+            onPressed: () => context.push('/my-projects'),
+          ),
+          IconButton(
             icon: const Icon(Icons.refresh, color: whiteColor),
             onPressed: () => ref.read(projectsProvider.notifier).refresh(),
           ),

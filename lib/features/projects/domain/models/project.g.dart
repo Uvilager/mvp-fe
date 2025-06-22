@@ -38,6 +38,7 @@ _Project _$ProjectFromJson(Map<String, dynamic> json) => _Project(
   district: json['district'] as String?,
   hasUserVoted: json['has_user_voted'] as bool?,
   isUserVolunteer: json['is_user_volunteer'] as bool?,
+  isUserLeader: json['is_user_leader'] as bool?,
   volunteersCount: (json['volunteers_count'] as num?)?.toInt(),
   leadersCount: (json['leaders_count'] as num?)?.toInt(),
 );
@@ -65,6 +66,7 @@ Map<String, dynamic> _$ProjectToJson(_Project instance) => <String, dynamic>{
   'district': instance.district,
   'has_user_voted': instance.hasUserVoted,
   'is_user_volunteer': instance.isUserVolunteer,
+  'is_user_leader': instance.isUserLeader,
   'volunteers_count': instance.volunteersCount,
   'leaders_count': instance.leadersCount,
 };
